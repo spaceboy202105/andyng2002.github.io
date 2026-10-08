@@ -1,6 +1,6 @@
 # 个人主页开发任务草案
 
-状态：等待用户确认任务颗粒度与阻塞关系，尚未发布为正式 Issue。此文件是评审用任务拆分，不是已配置的本地 tracker。
+状态：用户已授权按 implement-spec 实现和部署。规范与七项任务已发布到 GitHub Issues，编号和依赖见 `docs/implementation-issues.json`。本文件保留验收条件。
 
 ## 01：双语个人首页可完整浏览
 
@@ -103,10 +103,6 @@
 
 **External input:** 用户选择真实展示内容、确认正式地址并授权部署。
 
-## 发布与执行前需要确认
+## 执行状态
 
-1. 这七项任务是否过粗或过细，是否需要合并或继续拆分？
-2. 阻塞关系是否准确？目前首页完成后，论文、项目、Blog 和 CV 可以独立推进。
-3. 执行方式选择主代理顺序实现、结束后独立审阅，还是逐任务独立实现与审阅？当前建议前者，以减少共享配置和首页的合并冲突。
-
-项目尚未配置 Issue tracker。按 to-tickets 要求，先运行 `/setup-matt-pocock-skills`。确认拆分后，如果选择本地 tracker，则为每项建立独立任务文件；如果选择线上 tracker，则建立独立 Issue 和实际阻塞关系。届时使用 `ready-for-agent` 标签，不在未确认时伪报任务已发布。
+使用 GitHub Issues，任务编号和阻塞关系见 `docs/implementation-issues.json`。实现者在隔离工作树逐项完成，合入 `feat/personal-site` 集成分支后根据实际验收关闭任务。用户已授权 GitHub 部署，首版公开范围已补充到开发规范。

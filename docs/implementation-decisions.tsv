@@ -1,2 +1,4 @@
 ts	phase	decision	why	evidence	result
 2026-10-08T00:00:00Z	start	按选定A与七项任务开始正式实现	用户已授权实现和GitHub部署	docs/superpowers/specs/2026-10-08-personal-site-development.md	内容选择等待回复，功能实现继续
+2026-10-08T13:53:02.550221+00:00	content	首版只发布简介照片联系与精简公开CV	用户明确选择先上线已确认信息	docs/superpowers/specs/2026-10-08-personal-site-development.md	已确认，未选作品不公开
+2026-10-08T13:53:02.550221+00:00	coordination	复用原型工作者执行T01	新代理席位已满，保留其页面上下文并转至隔离工作树	.worktrees/t01	实现进行中，后续评审使用未写实现的代理

@@ -21,7 +21,7 @@
 - 原始素材保持本地保存，并通过 Git 忽略规则排除。构建只读取明确批准的公开输入，不能递归复制原始素材目录。
 - 内容校验或构建失败时停止发布，保留已经在线的版本，并输出可定位的错误。
 - 当前工作树的旧站删除尚未提交；开始隔离开发前，先单独保存这些已授权删除，避免新工作树从旧提交恢复旧站。不得用全量暂存夹带本地素材。
-- 本文描述未来执行步骤和预期结果，不代表命令已运行。任务拆分、执行方式及发布目的地仍需按文末流程确认。
+- 本文描述未来执行步骤和预期结果，不代表命令已运行。本轮按 implement-spec 以隔离工作树执行七项任务，在单一集成分支汇总并部署到已核对的 GitHub Pages 地址。
 
 ## Review Focus
 
@@ -181,9 +181,9 @@ await expect(page.getByRole('link', { name: /演示|Demo/ })).toHaveCount(0);
 
 **Blocked by:** T01。
 
-**Files:** 创建 `src/features/blog/collection.ts`、`src/features/blog/content.ts`、`src/features/blog/ArticleLayout.astro`、两个 Blog 路由、`tests/e2e/blog.spec.ts`、`tests/build/blog.test.mjs` 和文章样例；扩展 `src/content.config.ts`、`astro.config.mjs` 与 SiteLayout 的 Blog 导航，安装并锁定 `@astrojs/markdown-remark`、`remark-math`、`rehype-katex`、`katex`。真实文章位于 `src/content/blog/`。
+**Files:** 创建 `src/features/blog/collection.ts`、`src/features/blog/content.ts`、`src/features/blog/ArticleLayout.astro`、两个 Blog 路由、`tests/e2e/blog.spec.ts`、`tests/build/blog.test.mjs` 和文章样例；扩展 `src/content.config.ts`、`astro.config.mjs` 与 SiteLayout 的 Blog 导航，安装并锁定 `@astrojs/markdown-remark`、`remark-math`、`rehype-raw`、`rehype-sanitize`、`rehype-katex`、`katex`。真实文章位于 `src/content/blog/`。
 
-**Interfaces:** 消费 T01 的语言路径接口。产出 `getBlogEntries(): Promise<CollectionEntry<'blog'>[]>` 和 `selectArticle({ entries, storyId, locale }: { entries: CollectionEntry<'blog'>[]; storyId: string; locale: Locale }): CollectionEntry<'blog'> | undefined`。先选指定语言，否则选同一 storyId 的现有原文；同一 storyId 与语言重复时构建失败。schema 含 `approved`、`storyId`、`lang: Locale`、`title`、`publishedAt`、可选 `updatedAt`、`tags: string[]`、可选摘要及 `relatedPublications/relatedProjects: string[]`。storyId 只含小写字母、数字与连接词的短横线，不能含路径分隔符；日期使用有效的 `YYYY-MM-DD`，列表按 publishedAt 倒序和 storyId 升序排列。
+**Interfaces:** 消费 T01 的语言路径接口。产出 `getBlogEntries(): Promise<CollectionEntry<'blog'>[]>` 和 `selectArticle({ entries, storyId, locale }: { entries: CollectionEntry<'blog'>[]; storyId: string; locale: Locale }): CollectionEntry<'blog'> | undefined`。先选指定语言，否则选同一 storyId 的现有原文；同一 storyId 与语言重复时构建失败。schema 含 `approved`、`storyId`、`lang: Locale`、`originalLang: Locale`、`title`、`publishedAt`、可选 `updatedAt`、`tags: string[]`、可选摘要及 `relatedPublications/relatedProjects: string[]`。storyId 只含小写字母、数字与连接词的短横线，不能含路径分隔符；日期使用有效的 `YYYY-MM-DD`，列表按 publishedAt 倒序和 storyId 升序排列。
 
 - [ ] **Step 1: 写失败测试。** `single-language story stays visible in both interfaces` 和 `translated story retains identity` 覆盖中英列表集合相同、正文语言标记、正确译文及文章刷新。另准备含数学公式、长代码、图片后相邻图注段落和三级标题的长文。
 
@@ -197,7 +197,7 @@ await expect(page).toHaveURL(/\/zh\/blog\/chinese-only\/$/);
 ```
 
 - [ ] **Step 2: 运行红灯检查。** `npm run test:e2e -- tests/e2e/blog.spec.ts`，预期文章地址或正文选择尚不存在导致失败。
-- [ ] **Step 3: 实现内容与渲染。** glob ID 保留语言区分，不用相同 frontmatter slug 覆盖两个文件。`getStaticPaths` 为每个获准 storyId 生成两种界面地址；使用 `render(entry)` 的 Content 和 headings。Astro 7 配置 `markdown.processor`，调用从 `@astrojs/markdown-remark` 导入的 `unified`，接入 `remark-math` 与 `rehype-katex`；内置 Shiki 使用 `github-light`，阅读页加载 KaTeX 样式。图注使用图片后紧邻的说明段落，不引入通用富文本编辑器或目录插件。
+- [ ] **Step 3: 实现内容与渲染。** glob ID 保留语言区分，不用相同 frontmatter slug 覆盖两个文件。`getStaticPaths` 为每个获准 storyId 生成两种界面地址；使用 `render(entry)` 的 Content 和 headings。Astro 7 配置 `markdown.processor`，调用从 `@astrojs/markdown-remark` 导入的 `unified`，接入 `remark-math` 与 `rehype-katex`；高亮样式须与 Markdown 过滤和内容安全策略兼容；可采用 Prism 的 CSS 类主题替代内联高亮样式，实际浏览器检查着色，阅读页加载 KaTeX 样式。图注使用图片后紧邻的说明段落，不引入通用富文本编辑器或目录插件。
 - [ ] **Step 4: 验证阅读及内容错误。** 浏览器检查公式呈现、代码高亮、图注相邻关系、目录跳转、日期及标签，在窄屏中代码和公式局部滚动。构建测试验证重复 storyId/lang、非法日期、updatedAt 早于 publishedAt 明确失败；修改正文后产物更新。运行 `npm run verify`，预期通过。
 - [ ] **Step 5: 提交。** 提交 `feat: add bilingual research blog reading`。
 
