@@ -69,3 +69,11 @@ test('404 offers working homepage links in both languages', async ({ page }) => 
   await page.getByRole('link', { name: '返回首页', exact: true }).click();
   await expect(page.getByRole('heading', { name: '测试研究者', level: 1 })).toBeVisible();
 });
+
+test('long unbroken biography stays within a narrow viewport', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto('/en/');
+  await expect(page.getByText(/https:\/\/research.example.org\/GeometryAwareAutoregressiveBoundaryRepresentationGeneration/)).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.screenshot({ path: testInfo.outputPath('long-bio.png'), fullPage: true });
+});

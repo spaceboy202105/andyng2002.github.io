@@ -5,7 +5,7 @@ name:
   en: Test Researcher
   zh: 测试研究者
 bio:
-  en: Synthetic biography for browser checks.
+  en: "Synthetic biography for browser checks. Research profile: https://research.example.org/GeometryAwareAutoregressiveBoundaryRepresentationGeneration"
   zh: 用于浏览器检查的合成简介。
 portrait: ../../assets/portrait.png
 portraitAlt:

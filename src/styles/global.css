@@ -18,7 +18,7 @@ img{max-width:100%}
 .profile-intro{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:72px;padding:54px 0 58px;align-items:center}
 h1{font:400 64px/1.1 Georgia,"Songti SC",serif;letter-spacing:-2px;margin:0 0 27px;overflow-wrap:anywhere}
 .profile-copy h1 span{color:var(--blue)}
-.profile-bio{font-size:15px;line-height:1.85;max-width:465px;color:var(--muted);margin:0 0 23px}
+.profile-bio{overflow-wrap:anywhere;font-size:15px;line-height:1.85;max-width:465px;color:var(--muted);margin:0 0 23px}
 .profile-copy .contact-links{margin-left:-6px}
 .profile-photo{height:300px;width:100%;object-fit:cover;object-position:65% 50%}
 .contact-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
