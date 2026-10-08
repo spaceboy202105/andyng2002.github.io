@@ -10,3 +10,6 @@ Gemfile.lock
 # Ingore files created by npm
 node_modules
 package-lock.json
+
+# Keep source material local; publish only selected content.
+/raw/
