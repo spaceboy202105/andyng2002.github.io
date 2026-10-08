@@ -1,0 +1,12 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { pageHref, ui } from '../i18n';
+---
+<SiteLayout locale="en" title={ui.en.missing} target={{kind:'home'}}>
+  <section class="not-found">
+    <h1>{ui.en.missing}</h1><p>{ui.en.missingText}</p>
+    <a href={pageHref({locale:'en',target:{kind:'home'}})}>{ui.en.returnHome}</a>
+    <p lang="zh">{ui.zh.missingText}</p>
+    <a lang="zh" href={pageHref({locale:'zh',target:{kind:'home'}})}>{ui.zh.returnHome}</a>
+  </section>
+</SiteLayout>

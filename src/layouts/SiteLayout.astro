@@ -1,0 +1,43 @@
+---
+import ContactLinks from '../components/ContactLinks.astro';
+import { getProfile } from '../features/profile/content';
+import { assetHref, pageHref, ui, type Locale, type PageTarget } from '../i18n';
+import '../styles/global.css';
+interface Props { locale: Locale; title: string; target: PageTarget }
+const { locale, title, target } = Astro.props;
+const { data: profile } = await getProfile();
+const text = ui[locale];
+const otherLocale = locale === 'en' ? 'zh' : 'en';
+const home = pageHref({ locale, target: { kind: 'home' } });
+const navigation = [{ href: home, label: text.home }, { href: `${home}#contact`, label: text.contact }];
+---
+<!doctype html>
+<html lang={locale} data-default-entry={Astro.url.pathname === assetHref('') ? '' : undefined} data-en-home={pageHref({locale:'en',target:{kind:'home'}})} data-zh-home={pageHref({locale:'zh',target:{kind:'home'}})}>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content={profile.bio[locale]}/>
+    <meta name="color-scheme" content="light"/>
+    <title>{title} · {profile.brand}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{text.skip}</a>
+    <div class="site-shell" id="top">
+      <header class="site-header">
+        <a class="brand" href={home} aria-label={`${profile.brand} ${text.home}`}>{profile.brand}</a>
+        <nav class="desktop-nav" aria-label={text.navigation}>{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav>
+        <details class="mobile-nav">
+          <summary>{text.menu}</summary>
+          <nav aria-label={text.navigation}>{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav>
+        </details>
+        <a class="language-link" href={pageHref({ locale: otherLocale, target })} lang={otherLocale} hreflang={otherLocale} data-language={otherLocale}>{locale === 'en' ? '中文' : 'EN'}</a>
+      </header>
+      <main id="main-content"><slot/></main>
+      <footer class="site-footer" id="contact">
+        <a class="footer-brand" href={home}>{profile.brand}</a>
+        <ContactLinks locale={locale} contacts={profile.contacts}/>
+      </footer>
+    </div>
+    <script src="../scripts/language.ts"></script>
+  </body>
+</html>

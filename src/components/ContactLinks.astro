@@ -1,0 +1,13 @@
+---
+import type { Locale } from '../i18n';
+import type { Profile } from '../features/profile/content';
+interface Props { locale: Locale; contacts: Profile['data']['contacts'] }
+const { locale, contacts } = Astro.props;
+---
+<div class="contact-links" aria-label={locale === 'zh' ? '联系方式' : 'Contact links'}>
+  {contacts.map(({ label, href }) => <a class="icon-link" href={href} aria-label={label} title={label} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      {label === 'Email' ? <><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></> : label === 'GitHub' ? <path d="M9 19c-4 1-4-2-6-2m12 5v-4a3 3 0 0 0-1-2c4 0 7-2 7-6a5 5 0 0 0-1-3c0-2 0-3-1-4-2 0-3 1-4 1a12 12 0 0 0-6 0C8 4 7 3 5 3c-1 1-1 2-1 4a5 5 0 0 0-1 3c0 4 3 6 7 6a3 3 0 0 0-1 2v4"/> : label === 'Google Scholar' ? <><path d="m2 9 10-6 10 6-10 6-10-6Z"/><path d="M6 12v6c4 3 8 3 12 0v-6m4-3v8"/></> : label === 'ORCID' ? <><circle cx="12" cy="12" r="9"/><path d="M8 10v7m0-10v.1m4 3v7h2a3.5 3.5 0 0 0 0-7h-2Z"/></> : <><path d="M14 3h7v7m0-7L10 14"/><path d="M10 5H3v16h16v-7"/></>}
+    </svg>
+  </a>)}
+</div>
