@@ -15,4 +15,18 @@
 - 展示项目和首页代表作品由用户选择。`raw/` 仅作本地素材，保持 Git 忽略；构建只使用已批准的公开输入。
 - 网站的中英文 CV 必须重新排版。原简历和 `raw/cv-source-sanitized.pdf` 都不是正式公开版本。
 - 按开发规范检查实际页面、生成文件和 PDF 后再报告完成，明确区分规范、实现、测试和线上发布状态。
-- 当前未配置项目 Issue tracker。发布 Issue 前读取实际项目配置，不从 Git remote 推断发布目的地。
+- 规范与任务使用 GitHub Issues，操作前读取 `docs/agents/issue-tracker.md`。
+
+## Agent skills
+
+### Issue tracker
+
+规范与开发任务记录在 `spaceboy202105/andyng2002.github.io` 的 GitHub Issues。操作前阅读 [issue-tracker.md](docs/agents/issue-tracker.md)。
+
+### Triage labels
+
+使用默认五个分类标签。分类或更新任务时阅读 [triage-labels.md](docs/agents/triage-labels.md)。
+
+### Domain docs
+
+使用根目录术语表及按需建立的设计决定记录，采用 single-context 布局。开始探索相关内容前阅读 [domain.md](docs/agents/domain.md)。

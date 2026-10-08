@@ -1,15 +1,14 @@
-# Ignore the contents of the _site directory
-_site/
-
-# Ignore the directory for local files during development
-local/
-
-# Ignore the Gemfile that is generated
-Gemfile.lock
-
-# Ingore files created by npm
-node_modules
-package-lock.json
-
-# Keep source material local; publish only selected content.
+node_modules/
+/dist/
+/.astro/
+/.test-dist*/
+/playwright-report/
+/test-results/
+/.audit/
+/.playwright-mcp/
+/.worktrees/
 /raw/
+.env
+.env.*
+!.env.example
+.DS_Store
