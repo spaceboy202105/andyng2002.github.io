@@ -3,9 +3,13 @@ import type { CollectionEntry } from 'astro:content';
 import type { MarkdownHeading } from '@astrojs/markdown-remark';
 import { pageHref, type Locale } from '../../i18n';
 import 'katex/dist/katex.min.css';
+import { getPublications } from '../publications/content';
+import { getProjects } from '../projects/content';
+import { resolveRelated } from '../related';
 interface Props { locale: Locale; article: CollectionEntry<'blog'>; versions: CollectionEntry<'blog'>[]; headings: MarkdownHeading[] }
 const { locale, article, versions, headings } = Astro.props;
 const { data } = article;
+const related = resolveRelated({ article, publications: await getPublications(), projects: await getProjects() });
 const languageName = { en: { en: 'English', zh: 'Chinese' }, zh: { en: '英文', zh: '中文' } };
 ---
 <article class="research-article" lang={data.lang}>
@@ -23,4 +27,11 @@ const languageName = { en: { en: 'English', zh: 'Chinese' }, zh: { en: '英文',
     </nav>}
     <div class="article-body"><slot/></div>
   </div>
+  {(related.publications.length > 0 || related.projects.length > 0) && <section class="article-related" lang={locale} aria-labelledby="related-title">
+    <h2 id="related-title">{locale === 'en' ? 'Related work' : '相关内容'}</h2>
+    <ul>
+      {related.publications.map(entry => <li><a href={`${pageHref({locale,target:{kind:'publications'}})}#${entry.id}`}>{locale === 'en' ? 'Related paper: ' : '相关论文：'}{entry.data.title}</a></li>)}
+      {related.projects.map(entry => <li><a href={`${pageHref({locale,target:{kind:'projects'}})}#${entry.id}`}>{locale === 'en' ? 'Related project: ' : '相关项目：'}{entry.data.name[locale]}</a></li>)}
+    </ul>
+  </section>}
 </article>

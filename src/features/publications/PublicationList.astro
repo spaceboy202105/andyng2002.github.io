@@ -1,9 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import type { Locale } from '../../i18n';
+import { pageHref, type Locale } from '../../i18n';
+import { getBlogEntries, selectStories } from '../blog/content';
 interface Props { locale: Locale; entries: CollectionEntry<'publications'>[] }
 const { locale, entries } = Astro.props;
+const versions = await getBlogEntries();
+const stories = selectStories({ entries: versions, locale });
 const statuses = {
   en: { preprint: 'Preprint', submitted: 'Submitted, decision pending', accepted: 'Accepted', published: 'Published' },
   zh: { preprint: '预印本', submitted: '在投，等待决定', accepted: '已录用', published: '已发表' },
@@ -20,6 +23,7 @@ const statuses = {
       <div class="entry-links">
         {data.paperUrl && <a href={data.paperUrl}>{locale === 'en' ? 'Paper' : '论文'}</a>}
         {data.codeUrl && <a href={data.codeUrl}>{locale === 'en' ? 'Code' : '代码'}</a>}
+        {stories.filter(story => versions.some(version => version.data.storyId === story.data.storyId && version.data.relatedPublications.includes(id))).map(story => <a href={pageHref({locale,target:{kind:'article',storyId:story.data.storyId}})} lang={story.data.lang}>{story.data.title}</a>)}
       </div>
     </div>
   </article>)}

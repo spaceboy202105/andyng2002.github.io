@@ -1,9 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import type { Locale } from '../../i18n';
+import { pageHref, type Locale } from '../../i18n';
+import { getBlogEntries, selectStories } from '../blog/content';
 interface Props { locale: Locale; entries: CollectionEntry<'projects'>[] }
 const { locale, entries } = Astro.props;
+const versions = await getBlogEntries();
+const stories = selectStories({ entries: versions, locale });
 ---
 <div class="project-grid">
   {entries.map(({ id, data }) => <article class="project" id={id}>
@@ -15,6 +18,7 @@ const { locale, entries } = Astro.props;
     <div class="entry-links">
       {data.codeUrl && <a href={data.codeUrl}>{locale === 'en' ? 'Code' : '代码'}</a>}
       {data.demoUrl && <a href={data.demoUrl}>{locale === 'en' ? 'Demo' : '演示'}</a>}
+      {stories.filter(story => versions.some(version => version.data.storyId === story.data.storyId && version.data.relatedProjects.includes(id))).map(story => <a href={pageHref({locale,target:{kind:'article',storyId:story.data.storyId}})} lang={story.data.lang}>{story.data.title}</a>)}
     </div>
   </article>)}
 </div>

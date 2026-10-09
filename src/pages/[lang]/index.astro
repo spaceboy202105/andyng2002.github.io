@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import ProfileIntro from '../../features/profile/ProfileIntro.astro';
+import HomeContent from '../../components/HomeContent.astro';
 import { getProfile } from '../../features/profile/content';
 import { locales } from '../../i18n';
 export function getStaticPaths() { return locales.map(locale => ({ params: { lang: locale }, props: { locale } })); }
@@ -8,5 +8,5 @@ const { locale } = Astro.props;
 const profile = await getProfile();
 ---
 <SiteLayout locale={locale} title={profile.data.name[locale]} target={{kind:'home'}}>
-  <ProfileIntro locale={locale} profile={profile}/>
+  <HomeContent locale={locale} profile={profile}/>
 </SiteLayout>

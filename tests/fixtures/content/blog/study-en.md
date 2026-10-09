@@ -6,6 +6,8 @@ originalLang: zh
 title: Sample Research Article
 publishedAt: '2026-04-02'
 updatedAt: '2026-04-04'
+relatedPublications: [featured]
+relatedProjects: [selected]
 tags: [Research, Geometry]
 summary: Research notes with equations and figures.
 ---

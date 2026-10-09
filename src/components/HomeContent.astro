@@ -1,0 +1,30 @@
+---
+import ProfileIntro from '../features/profile/ProfileIntro.astro';
+import type { Profile } from '../features/profile/content';
+import PublicationList from '../features/publications/PublicationList.astro';
+import { getPublications } from '../features/publications/content';
+import ProjectGrid from '../features/projects/ProjectGrid.astro';
+import { getProjects } from '../features/projects/content';
+import BlogList from '../features/blog/BlogList.astro';
+import { getBlogEntries, selectStories } from '../features/blog/content';
+import { pageHref, type Locale } from '../i18n';
+interface Props { locale: Locale; profile: Profile }
+const { locale, profile } = Astro.props;
+const [publications, projects, articles] = await Promise.all([getPublications(), getProjects(), getBlogEntries()]);
+const featuredPublications = publications.filter(entry => entry.data.featured);
+const featuredProjects = projects.filter(entry => entry.data.featured);
+const latest = selectStories({ entries: articles, locale }).slice(0, 3);
+---
+<ProfileIntro locale={locale} profile={profile}/>
+{featuredPublications.length > 0 && <section class="home-section" id="research" aria-labelledby="research-title">
+  <header class="section-header"><h2 id="research-title">{locale === 'en' ? 'Selected research' : '代表论文'}</h2><a href={pageHref({locale,target:{kind:'publications'}})}>{locale === 'en' ? 'All research' : '全部学术成果'} ↗</a></header>
+  <PublicationList locale={locale} entries={featuredPublications}/>
+</section>}
+{featuredProjects.length > 0 && <section class="home-section" id="projects" aria-labelledby="projects-title">
+  <header class="section-header"><h2 id="projects-title">{locale === 'en' ? 'Selected projects' : '代表项目'}</h2><a href={pageHref({locale,target:{kind:'projects'}})}>{locale === 'en' ? 'All projects' : '全部个人项目'} ↗</a></header>
+  <ProjectGrid locale={locale} entries={featuredProjects}/>
+</section>}
+{latest.length > 0 && <section class="home-section" id="blog" aria-labelledby="blog-title">
+  <header class="section-header"><h2 id="blog-title">{locale === 'en' ? 'Latest writing' : '最新文章'}</h2><a href={pageHref({locale,target:{kind:'blog'}})}>{locale === 'en' ? 'All articles' : '全部文章'} ↗</a></header>
+  <BlogList locale={locale} entries={latest}/>
+</section>}

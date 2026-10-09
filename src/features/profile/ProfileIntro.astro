@@ -6,7 +6,7 @@ import type { Profile } from './content';
 interface Props { locale: Locale; profile: Profile }
 const { locale, profile: { data } } = Astro.props;
 ---
-<section class="profile-intro" aria-labelledby="profile-name">
+<section id="profile" class="profile-intro" aria-labelledby="profile-name">
   <div class="profile-copy">
     <h1 id="profile-name">{data.name[locale]}<span aria-hidden="true">.</span></h1>
     <p class="profile-bio">{data.bio[locale]}</p>

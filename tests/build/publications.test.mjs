@@ -15,6 +15,10 @@ test('publication Markdown updates the list and approval revocation removes its 
     assert.match(await readFile(path.join(directory, 'dist/en/publications/index.html'), 'utf8'), /Updated Research Title/);
     assert.ok((await readdir(path.join(directory, 'dist/_astro'))).some(name => name.includes('research-only')));
     await writeFile(file, source.replace('approved: true', 'approved: false'));
+    for (const name of ['study-en.md', 'study-zh.md']) {
+      const article = path.join(directory, 'content/blog', name);
+      await writeFile(article, (await readFile(article, 'utf8')).replace('relatedPublications: [featured]', 'relatedPublications: []'));
+    }
     result = build();
     assert.equal(result.status, 0, log(result));
     assert.doesNotMatch(await readFile(path.join(directory, 'dist/en/publications/index.html'), 'utf8'), /Updated Research Title|Sample Published Paper/);

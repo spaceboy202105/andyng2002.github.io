@@ -4,7 +4,7 @@ test('single-language story stays visible in both interfaces', async ({ page }) 
   for (const locale of ['en', 'zh']) {
     await page.goto(`/${locale}/blog/`);
     await expect(page.getByRole('link', { name: '单语研究记录', exact: true })).toBeVisible();
-    expect(await page.locator('.blog-list article').count()).toBe(2);
+    expect(await page.locator('.blog-list article').count()).toBe(4);
   }
   await page.goto('/en/blog/chinese-only/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
