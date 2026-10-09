@@ -44,7 +44,10 @@ test('source changes and damaged PDFs fail CV artifact verification; a missing l
       assert.match(text.stdout, /中文测试/);
       assert.match(text.stdout, /100%/);
       assert.match(text.stdout, /under_score/);
-      assert.match(text.stdout, /final_part\?value=100/);
+      assert.match(text.stdout.replace(/\s+/g, ''), /final_part\?value=100/);
+      const links = spawnSync('pdfinfo', ['-url', `${settings.publicDir}/cv/${locale}.pdf`], { encoding: 'utf8' });
+      assert.equal(links.status, 0, links.stderr);
+      assert.ok(links.stdout.split(/\s+/).includes('https://example.com/synthetic_fixture/very_long_segment_for_line_wrapping/another_long_segment_to_verify_readable_links/final_part?value=100'));
     }
     await rm(`${settings.publicDir}/cv/en.pdf`);
     assert.deepEqual(checkCv(settings), { zh: true });
