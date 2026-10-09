@@ -1,4 +1,4 @@
-\usepackage[margin=24mm]{geometry}
+\usepackage[margin=18mm,bottom=19mm]{geometry}
 \usepackage{fontspec}
 \usepackage[UTF8,fontset=fandol]{ctex}
 \setmainfont{texgyretermes-regular.otf}[BoldFont=texgyretermes-bold.otf,ItalicFont=texgyretermes-italic.otf,BoldItalicFont=texgyretermes-bolditalic.otf]
@@ -8,8 +8,11 @@
 \usepackage{xurl}
 \hypersetup{hidelinks,pdfauthor={Jingyu Wu},pdfcreator={XeLaTeX}}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{5pt}
-\pagestyle{empty}
-\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{3pt}\titlerule]
-\titlespacing*{\section}{0pt}{22pt}{11pt}
-\setlist[itemize]{leftmargin=16pt,itemsep=4pt,topsep=4pt}
+\setlength{\parskip}{3pt}
+\pagestyle{plain}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{2pt}\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+\setlist[itemize]{leftmargin=13pt,itemsep=1pt,topsep=2pt,parsep=0pt}
+\newcommand{\entry}[3]{\par\addvspace{7pt}\textbf{#1}\par\textit{#2}\hfill #3\par}
+\linespread{1}
+\raggedbottom

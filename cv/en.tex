@@ -2,31 +2,92 @@
 \input{style.tex}
 \hypersetup{pdftitle={Jingyu Wu - Curriculum Vitae}}
 \begin{document}
-{\fontsize{27}{32}\selectfont\bfseries Jingyu Wu}\hfill Curriculum Vitae
+\fontsize{10.5}{12.3}\selectfont
+{\fontsize{25}{29}\selectfont\bfseries Jingyu Wu}\hfill Curriculum Vitae\quad andy
 
-{\large andy}
-
-\href{mailto:andyng@mail.ustc.edu.cn}{andyng@mail.ustc.edu.cn}\quad \href{https://github.com/spaceboy202105}{GitHub}
-
+\href{mailto:andyng@mail.ustc.edu.cn}{andyng@mail.ustc.edu.cn}\quad
+\href{https://github.com/spaceboy202105}{GitHub}\quad
 \href{https://orcid.org/0009-0004-7685-2901}{ORCID: 0009-0004-7685-2901}
+
 \section{Education}
-\textbf{University of Science and Technology of China}
+\textbf{University of Science and Technology of China}\hfill Sep 2024 - Jun 2027 (expected)
 
-Master's study in Intelligent Science and Technology (in progress)
+Master's study, Intelligent Science and Technology; School of Artificial Intelligence and Data Science
 
-{\small Sep 2024 - Present}
-\par\vspace{8pt}
-\textbf{Hefei University of Technology}
+\textbf{Hefei University of Technology}\hfill Sep 2020 - Jun 2024
 
-Undergraduate study in Information Security
+Undergraduate study, Information Security; School of Computer Science and Information Engineering
 
-{\small Sep 2020 - Jun 2024}
-\par\vspace{8pt}
 \section{Research interests}
+Agentic engineering; 3D generation; autoregressive modeling; computer graphics; AI-generated content (AIGC)
+
+\section{Research and projects}
+\entry{Towards Valid B-Rep Generation: Training-Free Wireframe Anomaly Detection and Repair}{First author; submitted to CVM, decision pending}{Dec 2025 - May 2026}
+Preprint: \href{https://arxiv.org/abs/2608.04955}{arXiv:2608.04955}
 \begin{itemize}
-\item Computer graphics
-\item 3D generation
-\item Autoregressive modeling
-\item Agentic engineering
+\item Proposed training-free WDR, combining GTAD anomaly detection and EGGTR energy-guided repair at the wireframe stage. Detects and routes self-intersections, collapsed edges and disconnected vertices for local regeneration; supports autoregressive and diffusion B-Rep generators without retraining the base model.
+\item Integrated WDR into DTGBrepGen, Stitch-A-Shape and BrepForge. On 3,000 paired samples, improved DTGBrepGen validity from 79.5\% to 95.6\% on DeepCAD and from 68.1\% to 83.9\% on ABC, largely preserving generation diversity and distribution quality.
 \end{itemize}
+\textbf{Stack:} Python, PyTorch, Diffuser, PythonOCCT
+
+\entry{TrussOrbit: Edge-Orbit Sequence Modeling for Truss Metamaterial Inverse Design}{First author; submitted to ICLR 2027, decision pending}{Jul 2026 - Sep 2026}
+\begin{itemize}
+\item Proposed EOTR to jointly encode node geometry and connectivity through edge-orbit sequences. Compact sequences and symmetry expansion reconstruct full trusses for target-stiffness-driven autoregressive inverse design.
+\item Proposed set-level reinforcement learning with SMCO: finite-element feedback and empty-slot counterfactual evaluation assign sequence-level marginal credit, combined with GSPO to jointly optimize stiffness matching and physical validity.
+\item On a unified benchmark of 1.49 million structures built by our team, outperformed all compared baselines in speed and reconstruction error for single-shot inverse generation from stiffness matrices, while supporting a larger topology design space.
+\end{itemize}
+\textbf{Stack:} Python, PyTorch, VeRL, SGLang
+
+\entry{Automated research system based on coding agents}{Project lead and core contributor}{Sep 2026 - Present}
+\begin{itemize}
+\item Built the framework and led Idea Proposal and automated experiments. Implemented customizable research ideation with the Codex SDK, integrating within- and cross-domain literature, prior experiments and researcher input for iterative human-agent collaboration.
+\item Produced an Idea Package containing research gaps, method concepts, introduction figures, baselines, datasets and metrics. Used it to select experiment types and templates, plan execution, and schedule and monitor experiments through Codex.
+\item Consolidated experimental processes and results into an Experimental Package as evidence for downstream paper-generation modules, connecting ideation, execution and results delivery.
+\end{itemize}
+\textbf{Stack:} Codex SDK, Python
+
+\newpage
+\section{Research and projects (continued)}
+\entry{Autoregressive wireframe generation}{Project lead}{}
+\begin{itemize}
+\item Led the team in the CSIAM GDC 2026 CAD Wireframe Neural Compression Challenge: EdgeGPT ranked 1st in the preliminary round; CurveGPT ranked 2nd in the final. \href{https://mathmagic-official.github.io/AICAD/}{Competition website}
+\item Evolved EdgeGPT into CurveGPT with GPT-style autoregressive decoding and a constrained, typed-edge grammar for LINE, ARC and COMPLEX curves. Designed HQVAE to compress complex curves into discrete RQ tokens and constrained generation with an inference state machine to reduce format failures in long sequences.
+\item Cleaned about 450,000 records from the official and ABC datasets; built three-stage training and a complete evaluation pipeline.
+\end{itemize}
+\textbf{Stack:} Python, PyTorch, Transformers
+
+\entry{Design and implementation of a tiled software rasterization pipeline}{Undergraduate thesis}{Dec 2023 - May 2024}
+\begin{itemize}
+\item Independently implemented a programmable CUDA software rasterizer with Triangle Setup, Bin Raster, Coarse Raster and Fine Raster stages, primitive-order preservation and an interactive rendering system.
+\item Refactored warp-level synchronization and thread-safe interfaces for correctness and scalability on modern GPUs. Proposed CPU-scheduled multi-pass 4K rendering to overcome previous resolution and concurrency limits.
+\item Used dynamic shared-memory allocation, reduction optimization, timer instrumentation and Nsight Compute to identify binning/coarse-raster bottlenecks and derive near-optimal block configurations for the architecture.
+\end{itemize}
+\textbf{Stack:} C++, OpenGL, CUDA
+
+\entry{Privacy-preserving navigation with unordered waypoints on encrypted urban maps}{Fourth author of the resulting paper; competition project lead}{Dec 2022 - Jun 2023}
+\begin{itemize}
+\item Contributed to Semi-Constrained Navigation, with results published in IEEE TDSC (CCF-A): navigation through $k$ unordered waypoints on encrypted urban maps, balancing accuracy, privacy and query efficiency.
+\item Proposed precomputation-based acceleration, improving the execution efficiency of key homomorphic-encryption operators by 3--6$\times$; contributed to the path-distance oracle, encrypted queries and cloud-side routing logic.
+\item Built the backend interaction pipeline for key management, ciphertext communication and query services using Java, JPBC and Spring Boot; validated real-time performance and usability at urban-map scale.
+\end{itemize}
+\textbf{Stack:} Java, JPBC, Spring Boot
+
+\section{Awards and honors}
+\begin{itemize}
+\item Jul 2026: 2nd place, CSIAM GDC 2026 CAD Wireframe Neural Compression Challenge.
+\item Nov 2024: Outstanding Undergraduate Thesis, Anhui Computer Federation (provincial).
+\item Jun 2024: Outstanding Graduate, Hefei University of Technology (university).
+\item Dec 2022: National First Prize, C++ division, National College Computer Ability Challenge.
+\item Dec 2022: National Scholarship (national).
+\item Jul 2022: Third Prize, undergraduate programming track, Anhui Robot Competition (provincial).
+\end{itemize}
+
+\section{Skills}
+\textbf{Foundations:} Data structures and algorithms, computer networks, operating systems and GPU architecture for model training, systems development and performance optimization.
+
+\textbf{Programming:} Python, C/C++, CUDA and Java; independent algorithm development, implementation and debugging.
+
+\textbf{Training tools:} PyTorch, Transformers and DeepSpeed; training pipelines and distributed-training acceleration.
+
+\textbf{AI-assisted workflows:} LLM-assisted coding, literature research and technical understanding to support development and research iteration.
 \end{document}
