@@ -9,7 +9,7 @@ const { data: profile } = await getProfile();
 const text = ui[locale];
 const otherLocale = locale === 'en' ? 'zh' : 'en';
 const home = pageHref({ locale, target: { kind: 'home' } });
-const navigation = [{ href: home, label: text.home }, { href: `${home}#contact`, label: text.contact }];
+const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale, target: { kind: 'publications' } }), label: locale === 'en' ? 'Research' : '学术成果' }, { href: pageHref({ locale, target: { kind: 'projects' } }), label: locale === 'en' ? 'Projects' : '个人项目' }, { href: pageHref({ locale, target: { kind: 'blog' } }), label: 'Blog' }, { href: `${home}#contact`, label: text.contact }];
 ---
 <!doctype html>
 <html lang={locale} data-default-entry={Astro.url.pathname === assetHref('') ? '' : undefined} data-en-home={pageHref({locale:'en',target:{kind:'home'}})} data-zh-home={pageHref({locale:'zh',target:{kind:'home'}})}>

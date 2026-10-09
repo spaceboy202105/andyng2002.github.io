@@ -1,0 +1,15 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import PublicationList from '../../../features/publications/PublicationList.astro';
+import { getPublications } from '../../../features/publications/content';
+import { locales } from '../../../i18n';
+export function getStaticPaths() { return locales.map(locale => ({ params: { lang: locale }, props: { locale } })); }
+const { locale } = Astro.props;
+const entries = await getPublications();
+const title = locale === 'en' ? 'Research' : '学术成果';
+---
+<SiteLayout locale={locale} title={title} target={{kind:'publications'}}>
+  <section class="listing"><h1>{title}</h1>
+    {entries.length ? <PublicationList locale={locale} entries={entries}/> : <p class="empty-state">{locale === 'en' ? 'No research outputs listed yet.' : '暂未列出学术成果。'}</p>}
+  </section>
+</SiteLayout>

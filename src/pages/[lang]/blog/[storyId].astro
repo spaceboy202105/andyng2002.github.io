@@ -1,0 +1,19 @@
+---
+import { render } from 'astro:content';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import ArticleLayout from '../../../features/blog/ArticleLayout.astro';
+import { getBlogEntries, selectStories } from '../../../features/blog/content';
+import { locales } from '../../../i18n';
+export async function getStaticPaths() {
+  const entries = await getBlogEntries();
+  return locales.flatMap(locale => selectStories({ entries, locale }).map(article => ({
+    params: { lang: locale, storyId: article.data.storyId },
+    props: { locale, article, versions: entries.filter(entry => entry.data.storyId === article.data.storyId) },
+  })));
+}
+const { locale, article, versions } = Astro.props;
+const { Content, headings } = await render(article);
+---
+<SiteLayout locale={locale} title={article.data.title} target={{kind:'article', storyId:article.data.storyId}}>
+  <ArticleLayout locale={locale} article={article} versions={versions} headings={headings}><Content/></ArticleLayout>
+</SiteLayout>
