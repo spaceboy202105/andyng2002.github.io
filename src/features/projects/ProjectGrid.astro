@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; entries: CollectionEntry<'projects'>[] }
+const { locale, entries } = Astro.props;
+---
+<div class="project-grid">
+  {entries.map(({ id, data }) => <article class="project" id={id}>
+    <Image src={data.cover} alt={data.coverAlt[locale]} width={900} class="project-cover"/>
+    {data.date && <p class="entry-meta"><time datetime={data.date}>{data.date}</time></p>}
+    <h2>{data.name[locale]}</h2>
+    <p>{data.summary[locale]}</p>
+    <p><strong>{locale === 'en' ? 'My role' : '个人职责'}</strong> · <span>{data.role[locale]}</span></p>
+    <div class="entry-links">
+      {data.codeUrl && <a href={data.codeUrl}>{locale === 'en' ? 'Code' : '代码'}</a>}
+      {data.demoUrl && <a href={data.demoUrl}>{locale === 'en' ? 'Demo' : '演示'}</a>}
+    </div>
+  </article>)}
+</div>
