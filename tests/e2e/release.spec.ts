@@ -57,8 +57,11 @@ test('subpath navigation, Markdown targets and translations retain their destina
   await expect(page.locator('article')).toHaveAttribute('lang', 'zh');
   await page.getByRole('link', { name: '中文', exact: true }).click();
   await expect(page).toHaveURL('/preview/zh/blog/chinese-only/');
+  await page.evaluate(() => localStorage.setItem('site-language', 'zh'));
   await page.goto('/preview/');
-  await expect(page).toHaveURL('/preview/zh/');
+  await expect(page).toHaveURL('/preview/en/');
+  await page.goto('/preview/zh/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'zh');
   await page.goto('/preview/en/');
   await expect(page).toHaveURL('/preview/en/');
   await expect(page.getByRole('link', { name: 'Email', exact: true }).first()).toHaveAttribute('href', 'mailto:researcher@example.org');

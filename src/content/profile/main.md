@@ -49,7 +49,10 @@ education:
 internships:
   - company:
       en: ZWSOFT
-      zh: 中望
+      zh: 中望软件
+    companyHref:
+      en: https://www.zwsoft.com/
+      zh: https://www.zwsoft.cn/
     location:
       en: Shanghai
       zh: 上海

@@ -21,6 +21,7 @@ export const profile = defineCollection({
     })).default([]),
     internships: z.array(z.object({
       company: localizedText,
+      companyHref: z.object({ en: externalUrl, zh: externalUrl }).optional(),
       location: localizedText,
       role: localizedText,
       period: localizedText,
