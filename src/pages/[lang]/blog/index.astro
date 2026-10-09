@@ -1,0 +1,14 @@
+---
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import BlogList from '../../../features/blog/BlogList.astro';
+import { getBlogEntries, selectStories } from '../../../features/blog/content';
+import { locales } from '../../../i18n';
+export function getStaticPaths() { return locales.map(locale => ({ params: { lang: locale }, props: { locale } })); }
+const { locale } = Astro.props;
+const entries = selectStories({ entries: await getBlogEntries(), locale });
+---
+<SiteLayout locale={locale} title="Blog" target={{kind:'blog'}}>
+  <section class="listing"><h1>Blog</h1>
+    {entries.length ? <BlogList locale={locale} entries={entries}/> : <p class="empty-state">{locale === 'en' ? 'No articles yet.' : '暂未发布文章。'}</p>}
+  </section>
+</SiteLayout>

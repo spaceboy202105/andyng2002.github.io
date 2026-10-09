@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from '@astrojs/markdown-remark';
+import { pageHref, type Locale } from '../../i18n';
+import 'katex/dist/katex.min.css';
+interface Props { locale: Locale; article: CollectionEntry<'blog'>; versions: CollectionEntry<'blog'>[]; headings: MarkdownHeading[] }
+const { locale, article, versions, headings } = Astro.props;
+const { data } = article;
+const languageName = { en: { en: 'English', zh: 'Chinese' }, zh: { en: '英文', zh: '中文' } };
+---
+<article class="research-article" lang={data.lang}>
+  <header class="article-header">
+    <p class="entry-meta" lang={locale}>{locale === 'en' ? 'Published' : '发布'} <time datetime={data.publishedAt}>{data.publishedAt}</time>{data.updatedAt && <> · {locale === 'en' ? 'Updated' : '更新'} <time datetime={data.updatedAt}>{data.updatedAt}</time></>}</p>
+    <h1>{data.title}</h1>
+    <p class="article-languages" lang={locale}><span>{locale === 'en' ? 'Original language: ' : '原文语言：'}{languageName[locale][data.originalLang]}</span> · <span>{locale === 'en' ? 'Reading: ' : '正文语言：'}{languageName[locale][data.lang]}</span></p>
+    <div class="entry-links">{versions.filter(version => version.data.lang !== data.lang).map(version => <a lang={version.data.lang} href={pageHref({locale: version.data.lang, target: {kind:'article', storyId:data.storyId}})}>{version.data.lang === 'en' ? 'Read English version' : '阅读中文版本'}</a>)}</div>
+    <ul class="tags" aria-label={locale === 'en' ? 'Topics' : '主题'}>{data.tags.map(tag => <li>{tag}</li>)}</ul>
+  </header>
+  <div class="article-grid">
+    {headings.length > 0 && <nav class="article-toc" aria-label={locale === 'en' ? 'On this page' : '文章目录'} lang={locale}>
+      <h2>{locale === 'en' ? 'On this page' : '文章目录'}</h2>
+      <ol>{headings.map(heading => <li class:list={{ subheading: heading.depth > 2 }}><a href={`#${heading.slug}`} lang={data.lang}>{heading.text}</a></li>)}</ol>
+    </nav>}
+    <div class="article-body"><slot/></div>
+  </div>
+</article>

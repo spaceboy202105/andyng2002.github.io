@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { pageHref, type Locale } from '../../i18n';
+interface Props { locale: Locale; entries: CollectionEntry<'blog'>[] }
+const { locale, entries } = Astro.props;
+---
+<div class="blog-list">
+  {entries.map(({ data }) => <article>
+    <p class="entry-meta"><time datetime={data.publishedAt}>{data.publishedAt}</time> · <span lang={data.lang}>{data.lang === 'zh' ? '中文' : 'English'}</span></p>
+    <h2><a href={pageHref({ locale, target: { kind: 'article', storyId: data.storyId } })} lang={data.lang}>{data.title}</a></h2>
+    {data.summary && <p lang={data.lang}>{data.summary}</p>}
+  </article>)}
+</div>
