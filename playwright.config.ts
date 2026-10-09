@@ -5,7 +5,7 @@ const origin = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
   testDir: './tests/e2e',
-  testIgnore: ['**/cv-missing.spec.ts', '**/release.spec.ts'],
+  testIgnore: ['**/cv.spec.ts', '**/cv-missing.spec.ts', '**/release.spec.ts'],
   fullyParallel: false,
   workers: 1,
   use: { baseURL: origin, trace: 'retain-on-failure' },

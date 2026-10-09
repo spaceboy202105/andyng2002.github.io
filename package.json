@@ -15,7 +15,10 @@
     "test:content": "node --test --test-concurrency=1 tests/build/*.test.mjs",
     "test:artifacts": "node --test tests/artifacts/*.test.mjs",
     "check:artifacts": "node scripts/check-artifacts.mjs",
-    "verify": "npm run check && npm run test:content && npm run test:artifacts && npm run test:e2e && npm run build && npm run check:artifacts"
+    "verify": "npm run check && npm run test:content && npm run test:artifacts && npm run test:e2e && npm run test:cv && npm run test:cv-missing && npm run build && npm run check:artifacts",
+    "build:cv": "node scripts/build-cv.mjs",
+    "test:cv": "playwright test --config playwright.cv.config.ts",
+    "test:cv-missing": "playwright test --config playwright.cv-missing.config.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "7.3.2",

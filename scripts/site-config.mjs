@@ -23,12 +23,13 @@ export function readSiteConfig() {
   const base = inputBase === '/' ? '/' : `${inputBase.replace(/\/$/, '')}/`;
   const contentDir = directory('SITE_CONTENT_DIR', 'src/content');
   const publicDir = directory('SITE_PUBLIC_DIR', 'public');
+  const cvSourceDir = directory('CV_SOURCE_DIR', 'cv');
   const outDir = directory('SITE_OUTPUT_DIR', 'dist');
-  const protectedDirectories = [contentDir, publicDir, ...['src', 'tests', 'scripts', 'docs', 'node_modules', '.git'].map(name => path.join(root, name))];
+  const protectedDirectories = [contentDir, publicDir, cvSourceDir, ...['src', 'tests', 'scripts', 'docs', 'node_modules', '.git'].map(name => path.join(root, name))];
   for (const protectedDirectory of protectedDirectories) {
     if ([path.relative(outDir, protectedDirectory), path.relative(protectedDirectory, outDir)].some(relative => !relative || (!relative.startsWith('..') && !path.isAbsolute(relative)))) {
       throw new Error(`SITE_OUTPUT_DIR overlaps a source directory: ${outDir}`);
     }
   }
-  return { site: site.origin, base, contentDir, publicDir, outDir, cacheDir: `${outDir}.cache`, manifestPath: `${outDir}.manifest.json` };
+  return { site: site.origin, base, contentDir, publicDir, cvSourceDir, cvManifestPath: path.join(cvSourceDir, 'manifest.json'), outDir, cacheDir: `${outDir}.cache`, manifestPath: `${outDir}.manifest.json` };
 }
