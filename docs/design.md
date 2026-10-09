@@ -95,7 +95,7 @@ CV 采用白底、单栏排版，中英文各以两页为目标，内容增加�
 
 - 邮箱：`andyng@mail.ustc.edu.cn`，已与用户提供的简历核对一致。
 - ORCID：`https://orcid.org/0009-0004-7685-2901`，用户直接提供。
-- Google Scholar：`https://scholar.google.com/citations?user=PS_CX0AAAAAJ`，来自旧配置，上线前核对链接。
+- Google Scholar：2026-10-09 核对发现旧配置指向他人，用户决定首版省略。执行规则见开发规范的首版公开内容。
 - GitHub：`https://github.com/spaceboy202105`，来自旧配置，上线前核对链接。
 
 ## 个人素材与隐私

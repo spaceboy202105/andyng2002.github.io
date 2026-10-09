@@ -14,8 +14,6 @@ portraitAlt:
 contacts:
   - label: Email
     href: mailto:andyng@mail.ustc.edu.cn
-  - label: Google Scholar
-    href: https://scholar.google.com/citations?user=PS_CX0AAAAAJ
   - label: GitHub
     href: https://github.com/spaceboy202105
   - label: ORCID

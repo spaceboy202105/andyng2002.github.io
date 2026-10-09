@@ -8,7 +8,7 @@
 
 - 开发、修改页面或验收之前，阅读[开发规范](docs/superpowers/specs/2026-10-08-personal-site-development.md)和[术语表](GLOSSARY.md)。
 - 需要了解用户确认过的设计取舍时，阅读[设计说明](docs/design.md)。新增规则维护在开发规范中，避免在多份文件重复定义。
-- 当前已清理旧站，尚未建立新站构建与测试入口。技术栈确定后，从项目实际配置读取命令，不沿用旧 Git 历史中的模板命令。
+- 当前使用 Astro 和 TypeScript，完整检查入口为 `npm run verify`。Node 版本和具体命令以 `package.json` 为准，不沿用旧 Git 历史中的模板命令。
 
 ## 内容与交付
 
