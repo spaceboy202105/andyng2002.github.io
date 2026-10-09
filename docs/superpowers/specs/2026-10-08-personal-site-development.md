@@ -2,7 +2,7 @@
 
 日期：2026-10-08。
 
-状态：2026-10-09 已实现本规范中的页面、内容校验、正式 CV 和发布检查，本地完整验收通过。GitHub CI、首次部署和线上验收仍待完成。规范和七项任务对应的 GitHub Issues 见 `docs/implementation-issues.json`，实际维护命令见 `README.md`。
+状态：2026-10-09 已实现本规范中的页面、内容校验、正式 CV 和发布检查，本地完整验收与 GitHub CI 已通过。部署运行和线上验收的实际证据记录在 [T07](https://github.com/spaceboy202105/andyng2002.github.io/issues/8)。规范和七项任务对应的 GitHub Issues 见 `docs/implementation-issues.json`，实际维护命令见 `README.md`。
 
 ## Problem Statement
 

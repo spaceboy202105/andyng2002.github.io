@@ -5,7 +5,7 @@ name:
   en: Jingyu Wu
   zh: 吴靖宇
 bio:
-  en: "I am a master's student at the University of Science and Technology of China. My research interests include computer graphics, 3D generation, autoregressive modeling, and agentic engineering."
+  en: "I am a master’s student at the University of Science and Technology of China. My research interests include computer graphics, 3D generation, autoregressive modeling, and agentic engineering."
   zh: 我是中国科学技术大学硕士研究生。我的研究兴趣包括计算机图形学、三维生成、自回归模型和智能体工程。
 portrait: ../../assets/portrait.jpg
 portraitAlt:

@@ -61,6 +61,6 @@ Inspect every rendered page and extracted text for private fields, missing chara
 
 ## Publish
 
-Pull requests run `.github/workflows/verify.yml` with read-only repository permission and no deployment. `.github/workflows/deploy.yml` starts manually on `master` only. It runs the entire release check before uploading only `dist`; deployment depends on that successful job and uses the `github-pages` environment with Pages and identity-token write permissions.
+Pull requests run `.github/workflows/verify.yml` with read-only repository permission and no deployment. `.github/workflows/deploy.yml` runs on pushes to `master` and can also be started manually on `master`. It runs the entire release check before uploading only `dist`; deployment depends on that successful job and uses the `github-pages` environment with Pages and identity-token write permissions.
 
-Repository Pages settings must use GitHub Actions and the environment must allow `master`. Confirm those settings, run the manual workflow, then inspect the actual site and both downloadable PDFs. Automatic `master` push deployment remains disabled until the initial deployment is verified. A failing build cannot upload or deploy new output through this workflow.
+Repository Pages settings must use GitHub Actions and the environment must allow `master`. Confirm those settings, run the manual workflow, then inspect the actual site and both downloadable PDFs. Each subsequent `master` update follows the same checked build and deployment sequence. A failing build cannot upload or deploy new output through this workflow.
