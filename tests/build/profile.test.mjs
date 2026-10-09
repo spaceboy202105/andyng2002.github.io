@@ -88,3 +88,30 @@ test('revoking profile approval removes the previously published image on a cach
     assert.equal((await readdir(path.join(directory, 'dist/_astro'))).some(name => name.includes('retired-portrait')), false);
   });
 });
+
+for (const [field, before, after] of [
+  ['education', 'degree: {en: Example degree, zh: 示例学位}', 'degree: {en: Example degree}'],
+  ['internships', 'role: {en: Example Researcher, zh: 示例研究员}', 'role: {en: Example Researcher}'],
+  ['advisor', 'https://example.org/advisor', 'javascript:alert(1)'],
+]) {
+  test(`profile rejects invalid ${field} content`, async () => {
+    await withSite(async ({ directory, build }) => {
+      const file = path.join(directory, 'content/profile/main.md');
+      await writeFile(file, (await readFile(file, 'utf8')).replace(before, after));
+      const result = build();
+      assert.notEqual(result.status, 0, log(result));
+      assert.match(log(result), new RegExp(field));
+    });
+  });
+}
+
+test('omitted education and internships do not create empty homepage sections', async () => {
+  await withSite(async ({ directory, build }) => {
+    const file = path.join(directory, 'content/profile/main.md');
+    await writeFile(file, (await readFile(file, 'utf8')).replace(/education:[\s\S]*?(?=contacts:)/, ''));
+    const result = build();
+    assert.equal(result.status, 0, log(result));
+    const html = await readFile(path.join(directory, 'dist/en/index.html'), 'utf8');
+    assert.doesNotMatch(html, /id="(?:education|internships)"/);
+  });
+});
