@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "sources": {
+    "en.tex": "8ef00f5fa4dd2eb225458e1670c3908603939cb3e66737a0a556d25a81682ed7",
+    "style.tex": "9dc8e621e684e77e7d71992e2a32d86125850b69118641ba7e382980310cc850",
+    "zh.tex": "64d3ba2b671c89ab47850ccb498f73b72717deb6d2a6a882454cfa1618c34945"
+  },
+  "pdfs": {
+    "zh": "83bb026381ebe55a9e8eb64c73ad0eb043adaf267e28a4f467933071cb7f7bc6",
+    "en": "e71905cfbf5b43670c9226d97fb717c99df15d8875e70576f06efacf1bf27d25"
+  }
+}

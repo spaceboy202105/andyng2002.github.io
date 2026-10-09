@@ -1,0 +1,9 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import HomeContent from '../components/HomeContent.astro';
+import { getProfile } from '../features/profile/content';
+const profile = await getProfile();
+---
+<SiteLayout locale="en" title={profile.data.name.en} target={{kind:'home'}}>
+  <HomeContent locale="en" profile={profile}/>
+</SiteLayout>

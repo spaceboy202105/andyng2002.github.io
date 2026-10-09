@@ -1,51 +1,66 @@
-# Academic Pages
+# Andy's academic website
 
-![pages-build-deployment](https://github.com/academicpages/academicpages.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)
+Astro and TypeScript generate the bilingual static website. The first public version contains the approved profile, portrait, contact links and two newly typeset CVs. Publications, projects and Blog remain empty until the site owner selects content. Google Scholar is intentionally omitted because the previous address identified another person.
 
-Academic Pages is a Github Pages template for academic websites.
+The public origin is `https://spaceboy202105.github.io`; the deployment base is `/andyng2002.github.io/`. Keep these separate. The site address is <https://spaceboy202105.github.io/andyng2002.github.io/>. Workflow configuration alone does not prove deployment. See the [development specification](docs/superpowers/specs/2026-10-08-personal-site-development.md), [glossary](GLOSSARY.md) and [tracked tasks](docs/implementation-issues.json) for scope and delivery status.
 
-# Getting Started
+## Run and check
 
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Click the "Use this template" button in the top right.
-1. On the "New repository" page, enter your repository name as "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and add your content.
-1. Upload any files (like PDFs, .zip files, etc.) to the `files/` directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
+Use Node 24, as CI does. `package.json` permits Node 24 or 25. Install the locked dependencies and Chromium before verification.
 
-See more info at https://academicpages.github.io/
+```sh
+npm ci
+npx playwright install chromium
+npm run dev
+```
 
-## Running Locally
+CV tests also need XeLaTeX, latexmk, CTEX, Fandol, TeX Gyre, xurl and Poppler (`pdftotext`, `pdftoppm`). On macOS, install a TeX Live distribution with those packages and Poppler. On Ubuntu, the workflow installs `texlive-xetex latexmk texlive-lang-chinese texlive-latex-extra texlive-fonts-recommended fonts-texgyre poppler-utils` and verifies the tools and font files before testing.
 
-When you are initially working your website, it is very useful to be able to preview the changes locally before pushing them to GitHub. To work locally you will need to:
+```sh
+npm run verify
+SITE_URL=https://spaceboy202105.github.io SITE_BASE_PATH=/andyng2002.github.io/ npm run verify:release
+```
 
-1. Clone the repository and made updates as detailed above.
-1. Make sure you have ruby-dev, bundler, and nodejs installed
-    
-    On most Linux distribution and [Windows Subsystem Linux](https://learn.microsoft.com/en-us/windows/wsl/about) the command is:
-    ```bash
-    sudo apt install ruby-dev ruby-bundler nodejs
-    ```
-    On MacOS the commands are:
-    ```bash
-    brew install ruby
-    brew install node
-    gem install bundler
-    ```
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `jekyll serve -l -H localhost` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+`verify` checks types, content boundaries, CV recovery, artifact exclusion, root-path browsing, CV availability and full `/preview/` browsing. It then builds the configured site and checks its output. `verify:release` adds the explicit formal origin/base, formal input directories and both verified CV requirements. Empty work collections are valid. A failed check exits nonzero.
 
-If you are running on Linux it may be necessary to install some additional dependencies prior to being able to run locally: `sudo apt install build-essential gcc make`
+Individual commands are `test:content`, `test:artifacts`, `test:e2e`, `test:cv`, `test:cv-missing`, `test:subpath`, `build` and `check:artifacts`. Build-based test files run sequentially because Astro also writes shared generated files in `.astro/`. Browser suites build their own isolated output. Subpath checks use port 4353 and `.test-dist-subpath`; they do not use `dist` as a fixture. `dist.manifest.json` records output hashes and build settings outside the public directory. Generated HTML links, image sources, image candidates and anchors must resolve under the configured base.
 
-# Maintenance
+## Maintain approved content
 
-Bug reports and feature requests to the template should be [submitted via GitHub](https://github.com/academicpages/academicpages.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/academicpages/academicpages.github.io/discussions).
+Content lives in `src/content`. A Markdown filename is its stable identifier. `approved: true` is an explicit publication decision, not a convenience for previewing a draft. `featured: true` separately marks an owner-selected homepage work. The build skips unapproved entries before reading their optional details. Never copy `raw/` or the synthetic `tests/fixtures` into public inputs.
 
-This repository was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License (see LICENSE.md). It is currently being maintained by [Robert Zupko](https://github.com/rjzupkoii) and additional maintainers would be welcomed.
+| Collection | Required public fields | Optional fields |
+| --- | --- | --- |
+| `profile/main.md` | `approved`, `brand`, bilingual `name`, `bio`, `portraitAlt`, `portrait`, `contacts` with `label` and `href` | None |
+| `publications/<id>.md` | `approved`, formal `title`, ordered `authors`, `year`, `status`, bilingual `summary` | `featured`, `venue`, `paperUrl`, `codeUrl`, `cover` with bilingual `coverAlt` |
+| `projects/<id>.md` | `approved`, bilingual `name`, `summary`, `role`, `coverAlt`, `cover` | `featured`, `date`, `codeUrl`, `demoUrl` |
+| `blog/<version-id>.md` | `approved`, `storyId`, `lang`, `originalLang`, `title`, `publishedAt`, `tags`, Markdown body | `updatedAt`, `summary`, `relatedPublications`, `relatedProjects` |
 
-## Bugfixes and enhancements
+Bilingual fields use `en` and `zh` keys. Dates use `YYYY-MM-DD`. Publication status is one of `preprint`, `submitted`, `accepted`, `published`; it must match the verified public record. Related IDs must identify approved entries. Translations share `storyId`, `originalLang` and `publishedAt`, with distinct `lang` values. A single-language article appears in both interfaces with its actual body language identified.
 
-If you have bugfixes and enhancements that you would like to submit as a pull request, you will need to [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) this repository as opposed to using it as a template. This will also allow you to [synchronize your copy](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) of template to your fork as well.
+Only Blog files have Markdown bodies. Use headings for the generated table of contents, fenced code, `$...$` or `$$...$$` for math, and an ordinary paragraph below an image for its caption. Raw HTML is rejected. Internal links use site-relative paths such as `/en/projects/#selected`; the build adds the deployment base and verifies the destination. A local image can use `../../assets/<filename>.png` (also JPG, WebP or AVIF). Image files belong in `src/assets`. External links use HTTP or HTTPS.
 
-Unfortunately, one logistical issue with a template theme like Academic Pages that makes it a little tricky to get bug fixes and updates to the core theme. If you use this template and customize it, you will probably get merge conflicts if you attempt to synchronize. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch.
+`public/` is copied verbatim, so every file must be listed explicitly in `scripts/public-files.json`. Keep the allowlist narrow. Approved CVs are `public/cv/zh.pdf` and `public/cv/en.pdf`. Missing optional URLs produce no link; missing or stale CV files never receive a download link.
+
+## Rebuild and inspect CVs
+
+Edit the approved public details in `cv/zh.tex` and `cv/en.tex`, with shared formatting in `cv/style.tex`. The sources are trusted, reviewed site inputs; this is not a service for arbitrary uploaded TeX. Never use an old CV or sanitized reference PDF as the public version.
+
+```sh
+npm run build:cv
+mkdir -p .audit/cv
+pdfinfo public/cv/zh.pdf
+pdfinfo public/cv/en.pdf
+pdftotext public/cv/zh.pdf .audit/cv/zh.txt
+pdftotext public/cv/en.pdf .audit/cv/en.txt
+pdftoppm -png -r 120 public/cv/zh.pdf .audit/cv/zh
+pdftoppm -png -r 120 public/cv/en.pdf .audit/cv/en
+```
+
+Inspect every rendered page and extracted text for private fields, missing characters, clipping, line breaks and matching bilingual facts. A successful compiler does not replace that inspection. The build stages both PDFs, verifies them and updates `cv/manifest.json` with source and PDF hashes. A failed second compilation or replacement restores the previous pair and manifest. Commit reviewed sources, both PDFs and the manifest together. Website builds verify the committed pair without silently retypesetting it on another machine.
+
+## Publish
+
+Pull requests run `.github/workflows/verify.yml` with read-only repository permission and no deployment. `.github/workflows/deploy.yml` starts manually on `master` only. It runs the entire release check before uploading only `dist`; deployment depends on that successful job and uses the `github-pages` environment with Pages and identity-token write permissions.
+
+Repository Pages settings must use GitHub Actions and the environment must allow `master`. Confirm those settings, run the manual workflow, then inspect the actual site and both downloadable PDFs. Automatic `master` push deployment remains disabled until the initial deployment is verified. A failing build cannot upload or deploy new output through this workflow.
