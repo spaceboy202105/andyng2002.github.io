@@ -32,10 +32,10 @@ test('language works when storage is denied', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('English content and language links work without JavaScript', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+test('English content and language links work without JavaScript', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4321/');
+  await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Test Researcher', level: 1 })).toBeVisible();
   await page.getByRole('link', { name: '中文', exact: true }).click();
   await expect(page.getByRole('heading', { name: '测试研究者', level: 1 })).toBeVisible();

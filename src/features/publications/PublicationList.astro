@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; entries: CollectionEntry<'publications'>[] }
+const { locale, entries } = Astro.props;
+const statuses = {
+  en: { preprint: 'Preprint', submitted: 'Submitted, decision pending', accepted: 'Accepted', published: 'Published' },
+  zh: { preprint: '预印本', submitted: '在投，等待决定', accepted: '已录用', published: '已发表' },
+};
+---
+<div class="publication-list">
+  {entries.map(({ id, data }) => <article class:list={['publication', { 'with-cover': data.cover }]} id={id}>
+    {data.cover && <Image src={data.cover} alt={data.coverAlt?.[locale] ?? ''} width={600} class="publication-cover"/>}
+    <div>
+      <p class="entry-meta">{data.year} · <span>{statuses[locale][data.status]}</span>{data.venue && ` · ${data.venue}`}</p>
+      <h2>{data.title}</h2>
+      <p class="authors">{data.authors.join(', ')}</p>
+      <p>{data.summary[locale]}</p>
+      <div class="entry-links">
+        {data.paperUrl && <a href={data.paperUrl}>{locale === 'en' ? 'Paper' : '论文'}</a>}
+        {data.codeUrl && <a href={data.codeUrl}>{locale === 'en' ? 'Code' : '代码'}</a>}
+      </div>
+    </div>
+  </article>)}
+</div>
