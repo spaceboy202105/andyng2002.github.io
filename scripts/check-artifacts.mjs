@@ -2,6 +2,7 @@ import { lstat, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { checkCv } from './cv-files.mjs';
 import { readSiteConfig } from './site-config.mjs';
 
 async function listFiles(directory, prefix = '') {
@@ -50,6 +51,7 @@ export async function recordArtifacts(settings) {
 
 export async function checkArtifacts(settings) {
   await checkInputs(settings);
+  checkCv(settings, settings.outDir);
   const manifest = JSON.parse(await readFile(settings.manifestPath, 'utf8'));
   if (manifest.contentDir !== settings.contentDir || manifest.publicDir !== settings.publicDir) throw new Error('Build inputs differ from the artifact manifest; rebuild first');
   const actual = await outputFiles(settings);
