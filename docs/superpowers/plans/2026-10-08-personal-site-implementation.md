@@ -1,5 +1,7 @@
 # 中英文个人学术主页 Implementation Plan
 
+执行状态更新于 2026-10-09。T01 至 T06 已集成并验收，T07 的本地发布检查通过，远端验证和部署待完成。以下保留原计划的步骤和预期结果；实际配置、命令和版本以 `package.json` 及 `README.md` 为准。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 交付可维护的中英文个人学术网站，包含已批准的简介、论文、项目、Blog、联系入口和重新制作的中英文 CV。
