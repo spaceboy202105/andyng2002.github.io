@@ -1,0 +1,32 @@
+name: Verify site
+on:
+  pull_request:
+permissions:
+  contents: read
+env:
+  SITE_URL: https://spaceboy202105.github.io
+  SITE_BASE_PATH: /andyng2002.github.io/
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Install and verify PDF tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex latexmk texlive-lang-chinese texlive-latex-extra texlive-fonts-recommended fonts-texgyre poppler-utils
+          xelatex --version
+          latexmk -v
+          test -n "$(kpsewhich ctexart.cls)"
+          test -n "$(kpsewhich FandolSong-Regular.otf)"
+          test -n "$(kpsewhich texgyretermes-regular.otf)"
+          test -n "$(kpsewhich xurl.sty)"
+          pdftotext -v
+          pdftoppm -v
+      - run: npm run verify:release

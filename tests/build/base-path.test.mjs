@@ -20,3 +20,9 @@ test('subdirectory build prefixes home, language, image and 404 addresses', asyn
     assert.match(root, /data-en-home="\/preview\/en\/"/);
   });
 });
+
+test('the confirmed project base accepts dots but rejects traversal segments', async () => {
+  const { readSiteConfig } = await import('../../scripts/site-config.mjs');
+  assert.equal(readSiteConfig({ SITE_BASE_PATH: '/andyng2002.github.io/' }).base, '/andyng2002.github.io/');
+  for (const base of ['/../', '/./', '/preview/../', '/preview/./']) assert.throws(() => readSiteConfig({ SITE_BASE_PATH: base }), /SITE_BASE_PATH/);
+});
