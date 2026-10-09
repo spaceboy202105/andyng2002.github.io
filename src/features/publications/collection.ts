@@ -9,7 +9,10 @@ export const publications = defineCollection({
     approved: approval,
     featured: z.boolean().default(false),
     title: z.string().trim().min(1),
-    authors: z.array(z.string().trim().min(1)).min(1),
+    authors: z.array(z.union([
+      z.string().trim().min(1),
+      z.object({ name: z.string().trim().min(1), url: externalUrl }),
+    ])).min(1),
     year: z.number().int().min(1900).max(2100),
     status: z.enum(['preprint', 'submitted', 'accepted', 'published']),
     summary: localizedText,

@@ -18,13 +18,16 @@ const statuses = {
     <div>
       <p class="entry-meta">{data.year} · <span>{statuses[locale][data.status]}</span>{data.venue && ` · ${data.venue}`}</p>
       <h2>{data.title}</h2>
-      <p class="authors">{data.authors.join(', ')}</p>
+      <p class="authors">{data.authors.map((author, index) => <>{index > 0 && ', '}{typeof author === 'string' ? author : <a href={author.url}>{author.name}</a>}</>)}</p>
       <p>{data.summary[locale]}</p>
       <div class="entry-links">
-        {data.paperUrl && <a href={data.paperUrl}>{locale === 'en' ? 'Paper' : '论文'}</a>}
+        {data.paperUrl && <a href={data.paperUrl}>{new URL(data.paperUrl).hostname === 'arxiv.org' ? 'arXiv' : locale === 'en' ? 'Paper' : '论文'}</a>}
         {data.codeUrl && <a href={data.codeUrl}>{locale === 'en' ? 'Code' : '代码'}</a>}
         {stories.filter(story => versions.some(version => version.data.storyId === story.data.storyId && version.data.relatedPublications.includes(id))).map(story => <a href={pageHref({locale,target:{kind:'article',storyId:story.data.storyId}})} lang={story.data.lang}>{story.data.title}</a>)}
       </div>
     </div>
   </article>)}
 </div>
+<style>
+  .authors a { text-decoration: underline; text-underline-offset: 3px; }
+</style>

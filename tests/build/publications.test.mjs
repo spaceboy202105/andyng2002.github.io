@@ -29,6 +29,8 @@ test('publication Markdown updates the list and approval revocation removes its 
 for (const [label, before, after, error] of [
   ['bilingual summary', '  zh: 示例研究贡献\n', '', /summary[\s\S]*zh/],
   ['safe URL', 'https://example.org/paper', 'javascript:alert(1)', /paperUrl/],
+  ['safe author URL', 'https://example.org/researcher-two', 'javascript:alert(1)', /authors/],
+  ['author name', 'name: Researcher Two', 'name: " "', /authors/],
   ['image alternative', '  zh: 示例研究图\n', '', /coverAlt/],
 ]) test(`publication requires ${label}`, async () => {
   await withSite(async ({ directory, build }) => {
