@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('home defaults to English and remembers explicit choice', async ({ page }) => {
+test('home always defaults to English and allows explicit Chinese pages', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveURL(/\/en\/$/);
   await expect(page.getByRole('heading', { name: 'Test Researcher', level: 1 })).toBeVisible();
@@ -9,11 +9,15 @@ test('home defaults to English and remembers explicit choice', async ({ page }) 
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh');
   await page.goto('/');
-  await expect(page).toHaveURL(/\/zh\/$/);
+  await expect(page).toHaveURL(/\/en\/$/);
 });
 
-test('explicit URL wins over stored preference', async ({ page }) => {
+test('legacy stored Chinese cannot override the English entry or explicit URLs', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('site-language', 'zh'));
+  await page.goto('/');
+  await expect(page).toHaveURL(/\/en\/$/);
+  await page.goto('/zh/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'zh');
   await page.goto('/en/');
   await expect(page).toHaveURL(/\/en\/$/);
   await expect(page.getByRole('heading', { name: 'Test Researcher', level: 1 })).toBeVisible();
@@ -89,6 +93,7 @@ for (const locale of ['en', 'zh']) {
       await expect(education).toContainText(locale === 'en' ? '2024 - 2027 (expected)' : '2024 - 2027（预计）');
       const internships = page.locator('#internships');
       await expect(internships).toContainText(locale === 'en' ? 'Example Company · Example City' : '示例公司 · 示例城市');
+      await expect(internships.getByRole('link', { name: locale === 'en' ? 'Example Company' : '示例公司' })).toHaveAttribute('href', locale === 'en' ? 'https://example.org/company' : 'https://example.org/zh/company');
       await expect(internships).toContainText(locale === 'en' ? 'Example Researcher' : '示例研究员');
       await expect(internships).toContainText(locale === 'en' ? '2026 - Present' : '2026 - 至今');
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

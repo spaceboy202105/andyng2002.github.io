@@ -38,7 +38,7 @@ Content lives in `src/content`. A Markdown filename is its stable identifier. `a
 
 Publication images appear to the left of the text on desktop and above it on narrow screens. Every approved paper requires a real representative figure and bilingual alternative text. `src/assets/wdr-teaser.png` is the unmodified Figure 1 from the [WDR arXiv HTML](https://arxiv.org/html/2608.04955v2/teaser.png), showing WDR-guided regeneration results. Astro generates the web image from this approved source.
 
-Profile education entries contain bilingual `institution`, `school`, `degree`, `period`, and an `advisor` with bilingual `name` and an HTTP or HTTPS `href`. Internship entries contain bilingual `company`, `location`, `role`, and `period`. Empty experience arrays produce no homepage section.
+Profile education entries contain bilingual `institution`, `school`, `degree`, `period`, and an `advisor` with bilingual `name` and an HTTP or HTTPS `href`. Internship entries contain bilingual `company`, `location`, `role`, and `period`, with optional `companyHref` containing an HTTP or HTTPS URL for each language. Empty experience arrays produce no homepage section.
 
 Publication authors can be plain names or objects with `name` and an HTTP or HTTPS `url`. Their array order is the displayed author order. Links to `arxiv.org` use the label `arXiv`; other paper links use the localized paper label.
 

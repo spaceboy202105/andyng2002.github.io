@@ -2,7 +2,7 @@
 
 状态：用户已确认第二轮原型 A。2026-10-09 正式网站与公开 CV 已实现并通过本地和 GitHub CI 验收；实际发布及线上验收证据见 [T07](https://github.com/spaceboy202105/andyng2002.github.io/issues/8)。下文保留设计决定和访谈记录，当前执行要求以开发规范为准。
 
-开发时以[开发规范](superpowers/specs/2026-10-08-personal-site-development.md)为执行与验收依据。本文保留已确认的产品设计和访谈记录。
+开发时以[开发规范](superpowers/specs/2026-10-08-personal-site-development.md)为执行与验收依据。本文保留已确认的产品设计和访谈记录。2026-10-09 用户随后调整为默认入口始终英文，并缩小教育和实习间距，保留栏目顺序；下方关于记住语言选择的文字保留为历史记录，当前规则见开发规范。
 
 ## 目标
 

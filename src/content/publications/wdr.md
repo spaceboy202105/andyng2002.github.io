@@ -1,6 +1,6 @@
 ---
 approved: true
-featured: true
+featured: false
 title: "Towards Valid B-Rep Generation: Training-Free Wireframe Anomaly Detection and Repair"
 authors:
   - Jingyu Wu

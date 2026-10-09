@@ -21,6 +21,7 @@ education:
       href: https://example.org/advisor
 internships:
   - company: {en: Example Company, zh: 示例公司}
+    companyHref: {en: https://example.org/company, zh: https://example.org/zh/company}
     location: {en: Example City, zh: 示例城市}
     role: {en: Example Researcher, zh: 示例研究员}
     period: {en: "2026 - Present", zh: "2026 - 至今"}

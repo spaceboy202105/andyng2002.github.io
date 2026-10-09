@@ -92,6 +92,7 @@ test('revoking profile approval removes the previously published image on a cach
 for (const [field, before, after] of [
   ['education', 'degree: {en: Example degree, zh: 示例学位}', 'degree: {en: Example degree}'],
   ['internships', 'role: {en: Example Researcher, zh: 示例研究员}', 'role: {en: Example Researcher}'],
+  ['companyHref', 'https://example.org/company', 'javascript:alert(1)'],
   ['advisor', 'https://example.org/advisor', 'javascript:alert(1)'],
 ]) {
   test(`profile rejects invalid ${field} content`, async () => {

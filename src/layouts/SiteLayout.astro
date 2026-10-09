@@ -12,7 +12,7 @@ const home = pageHref({ locale, target: { kind: 'home' } });
 const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale, target: { kind: 'publications' } }), label: locale === 'en' ? 'Research' : '学术成果' }, { href: pageHref({ locale, target: { kind: 'projects' } }), label: locale === 'en' ? 'Projects' : '个人项目' }, { href: pageHref({ locale, target: { kind: 'blog' } }), label: 'Blog' }, { href: `${home}#contact`, label: text.contact }];
 ---
 <!doctype html>
-<html lang={locale} data-default-entry={Astro.url.pathname === assetHref('') ? '' : undefined} data-en-home={pageHref({locale:'en',target:{kind:'home'}})} data-zh-home={pageHref({locale:'zh',target:{kind:'home'}})}>
+<html lang={locale} data-default-entry={Astro.url.pathname === assetHref('') ? '' : undefined} data-en-home={pageHref({locale:'en',target:{kind:'home'}})}>
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -30,7 +30,7 @@ const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale,
           <summary>{text.menu}</summary>
           <nav aria-label={text.navigation}>{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav>
         </details>
-        <a class="language-link" href={pageHref({ locale: otherLocale, target })} lang={otherLocale} hreflang={otherLocale} data-language={otherLocale}>{locale === 'en' ? '中文' : 'EN'}</a>
+        <a class="language-link" href={pageHref({ locale: otherLocale, target })} lang={otherLocale} hreflang={otherLocale}>{locale === 'en' ? '中文' : 'EN'}</a>
       </header>
       <main id="main-content"><slot/></main>
       <footer class="site-footer" id="contact">
