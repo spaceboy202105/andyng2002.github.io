@@ -2,7 +2,10 @@
 approved: true
 featured: true
 title: Sample Published Paper
-authors: [Researcher One, Researcher Two]
+authors:
+  - Researcher One
+  - name: Researcher Two
+    url: https://example.org/researcher-two
 year: 2025
 status: published
 venue: Sample Journal

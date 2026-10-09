@@ -1,6 +1,6 @@
 # Andy's academic website
 
-Astro and TypeScript generate the bilingual static website. The first public version contains the approved profile, portrait, contact links and two newly typeset CVs. Publications, projects and Blog remain empty until the site owner selects content. Google Scholar is intentionally omitted because the previous address identified another person.
+Astro and TypeScript generate the bilingual static website. The first public version contains the approved profile, portrait, contact links and two newly typeset CVs. The owner-selected WDR preprint appears on both homepages and publication lists. Projects and Blog remain empty until the site owner selects content. Google Scholar is intentionally omitted because the previous address identified another person.
 
 The public origin is `https://spaceboy202105.github.io`; the deployment base is `/andyng2002.github.io/`. Keep these separate. The site address is <https://spaceboy202105.github.io/andyng2002.github.io/>. Workflow configuration alone does not prove deployment. See the [development specification](docs/superpowers/specs/2026-10-08-personal-site-development.md), [glossary](GLOSSARY.md) and [tracked tasks](docs/implementation-issues.json) for scope and delivery status.
 
@@ -35,6 +35,8 @@ Content lives in `src/content`. A Markdown filename is its stable identifier. `a
 | `publications/<id>.md` | `approved`, formal `title`, ordered `authors`, `year`, `status`, bilingual `summary` | `featured`, `venue`, `paperUrl`, `codeUrl`, `cover` with bilingual `coverAlt` |
 | `projects/<id>.md` | `approved`, bilingual `name`, `summary`, `role`, `coverAlt`, `cover` | `featured`, `date`, `codeUrl`, `demoUrl` |
 | `blog/<version-id>.md` | `approved`, `storyId`, `lang`, `originalLang`, `title`, `publishedAt`, `tags`, Markdown body | `updatedAt`, `summary`, `relatedPublications`, `relatedProjects` |
+
+Publication authors can be plain names or objects with `name` and an HTTP or HTTPS `url`. Their array order is the displayed author order. Links to `arxiv.org` use the label `arXiv`; other paper links use the localized paper label.
 
 Bilingual fields use `en` and `zh` keys. Dates use `YYYY-MM-DD`. Publication status is one of `preprint`, `submitted`, `accepted`, `published`; it must match the verified public record. Related IDs must identify approved entries. Translations share `storyId`, `originalLang` and `publishedAt`, with distinct `lang` values. A single-language article appears in both interfaces with its actual body language identified.
 

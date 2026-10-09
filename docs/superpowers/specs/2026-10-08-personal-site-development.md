@@ -99,6 +99,10 @@
 
 CV 收录与网页条目展示是两项独立决定。新版 CV 可以包含原稿中的论文和项目，但不自动将这些内容加入首页或论文、项目、Blog 列表；网页条目仍待用户逐项调整和确认。原始 PDF 保持本地忽略，只发布重新制作并验收的两份 PDF；个人隐私字段及 Google Scholar 的既有省略决定继续有效。
 
+### WDR 网页展示（2026-10-09 用户确认）
+
+用户明确选择 WDR 作为首页代表论文，同时收录到中英文论文完整列表。正式题名为 Towards Valid B-Rep Generation: Training-Free Wireframe Anomaly Detection and Repair，作者依次为 Jingyu Wu、Youcheng Cai、Tengyu Luo、Ligang Liu，年份为 2026，网页标为预印本。提供 arXiv 链接，并将 Youcheng Cai 和 Ligang Liu 的作者姓名链接到已核对的个人主页。未提供的成果图和代码入口省略，其余论文、项目和 Blog 不因本次选择而获得展示资格。
+
 ### 技术组织与职责
 
 使用 Markdown 驱动、以静态网页及文件为输出的组织方式。运行时交互集中在语言选择和必要导航。初版不需要账号、数据库或内容编辑后台。具体生成工具、编程语言和测试框架在实施计划中选定，本规范要求的外部行为不随工具改变。
