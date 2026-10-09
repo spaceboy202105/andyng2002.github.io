@@ -1,6 +1,6 @@
 # 中英文个人学术主页 Implementation Plan
 
-执行状态更新于 2026-10-09。T01 至 T06 已集成并验收，T07 的本地发布检查通过，远端验证和部署待完成。以下保留原计划的步骤和预期结果；实际配置、命令和版本以 `package.json` 及 `README.md` 为准。
+执行状态更新于 2026-10-09。T01 至 T06 已集成并验收，T07 的本地发布检查和 GitHub CI 已通过，部署与线上验收证据见 [T07](https://github.com/spaceboy202105/andyng2002.github.io/issues/8)。以下保留原计划的步骤和预期结果；实际配置、命令和版本以 `package.json` 及 `README.md` 为准。
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
