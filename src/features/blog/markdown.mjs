@@ -14,6 +14,7 @@ export function safeMarkdown({ base, publicDir }) {
     visit(tree, node => {
       if (node.type === 'html') file.fail('Raw HTML is not allowed in Blog Markdown', node);
       if (!['link', 'image', 'definition'].includes(node.type)) return;
+      const isImage = node.type === 'image' || (node.type === 'definition' && imageReferences.has(node.identifier.toUpperCase()));
       let url;
       try { url = decodeURIComponent(node.url); }
       catch { file.fail('Invalid URL encoding in Blog Markdown', node); }
@@ -22,7 +23,7 @@ export function safeMarkdown({ base, publicDir }) {
         try { new URL(node.url); } catch { file.fail('Invalid external URL in Blog Markdown', node); }
         return;
       }
-      if (url.startsWith('#') && node.type !== 'image') return;
+      if (url.startsWith('#') && !isImage) return;
       if (/^\.\.\/\.\.\/assets\/[A-Za-z0-9][A-Za-z0-9._-]*\.(?:png|jpe?g|webp|avif)$/.test(url)) {
         if (node.type !== 'image' && !(node.type === 'definition' && imageReferences.has(node.identifier.toUpperCase()) && !linkReferences.has(node.identifier.toUpperCase()))) file.fail('Relative asset URLs must be used as images', node);
         if (!existsSync(path.resolve(path.dirname(file.path), url))) file.fail(`Missing approved image: ${url}`, node);
@@ -32,7 +33,7 @@ export function safeMarkdown({ base, publicDir }) {
         const target = url.split(/[?#]/)[0].slice(1);
         const page = /^(?:en|zh)\/(?:|publications\/|projects\/|blog\/(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?)$/.test(target);
         const asset = publicFiles.includes(target) && existsSync(path.join(publicDir, target));
-        if ((page && node.type !== 'image') || asset) {
+        if ((page && !isImage) || asset) {
           node.url = `${base.replace(/\/$/, '')}${node.url}`;
           return;
         }

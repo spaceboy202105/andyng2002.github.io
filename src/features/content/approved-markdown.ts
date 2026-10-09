@@ -27,6 +27,7 @@ export function approvedMarkdownLoader({ name, body = 'empty' }: { name: string;
           const flag = approval.safeParse(entry.frontmatter.approved);
           if (!flag.success) throw new Error(`${name}/${file.name}: approved must be true or false`);
           if (!flag.data) continue;
+          if (body === 'markdown' && !entry.content.trim()) throw new Error(`${name}/${file.name}: body must not be empty`);
           if (body === 'empty' && entry.content.trim()) throw new Error(`${name}/${file.name}: body must be empty; use the bilingual fields`);
           const id = path.basename(file.name, '.md');
           if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)) throw new Error(`${name}/${file.name}: filename must be a stable lowercase ID`);

@@ -29,6 +29,8 @@ for (const [label, body] of [
   ['data image', '![unsafe](data:image/svg+xml,unsafe)'],
   ['reference URL', '[unsafe][target]\n\n[target]: javascript:alert(1)'],
   ['network path', '[unsafe](//evil.example/path)'],
+  ['page image reference', '![unsafe][target]\n\n[target]: /en/projects/'],
+  ['anchor image reference', '![unsafe][target]\n\n[target]: #results'],
   ['relative asset link', '[unsafe](../../assets/portrait.png)'],
   ['relative asset reference link', '[unsafe][target]\n\n[target]: ../../assets/portrait.png'],
   ['raw path', '![unsafe](../../raw/private.png)'],
@@ -68,15 +70,27 @@ test('Blog changes body on cached build and rewrites local links and images for 
     let result = build(overrides);
     assert.equal(result.status, 0, log(result));
     const file = path.join(directory, 'content/blog/study-en.md');
-    await writeFile(file, `${await readFile(file, 'utf8')}\nFresh body after a content edit.\n`);
+    await writeFile(file, `${await readFile(file, 'utf8')}\nFresh body after a content edit.\n\n![Reference diagram][figure]\n\n[figure]: ../../assets/portrait.png\n`);
     result = build(overrides);
     assert.equal(result.status, 0, log(result));
     const html = await readFile(path.join(directory, 'dist/en/blog/sample-study/index.html'), 'utf8');
     assert.match(html, /Fresh body after a content edit\./);
+    assert.match(html, /alt="Reference diagram"/);
     assert.match(html, /href="\/preview\/en\/projects\/"/);
     assert.match(html, /src="\/preview\/_astro\//);
     assert.match(html, /href="#results"/);
     assert.doesNotMatch(html, /Unapproved translation/);
     assert.ok(!(await readdir(path.join(directory, 'dist/_astro'))).some(name => name.includes('not-imported')));
+  });
+});
+
+test('approved Blog requires a non-empty body', async () => {
+  await withSite(async ({ directory, build }) => {
+    const file = path.join(directory, 'content/blog/study-en.md');
+    const source = await readFile(file, 'utf8');
+    await writeFile(file, `${source.split('\n---\n')[0]}\n---\n\n  `);
+    const result = build();
+    assert.notEqual(result.status, 0, log(result));
+    assert.match(log(result), /blog\/study-en.md[\s\S]*body/);
   });
 });
