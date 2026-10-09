@@ -66,7 +66,8 @@ try {
     if (result.error || result.status !== 0) throw new Error(`TeX distribution lookup failed: ${result.error?.message ?? result.stderr}`);
     trustedRoots.push(result.stdout.trim());
   }
-  trustedRoots.push('/System/Library/Fonts', '/Library/Fonts', '/usr/share/fonts', '/usr/local/share/fonts');
+  // Debian packages also install TeX inputs outside TEXMFDIST.
+  trustedRoots.push('/usr/share/texmf', '/System/Library/Fonts', '/Library/Fonts', '/usr/share/fonts', '/usr/local/share/fonts');
   const trusted = [];
   for (const directory of trustedRoots) {
     if (!path.isAbsolute(directory)) throw new Error(`Invalid TeX distribution directory: ${directory}`);
