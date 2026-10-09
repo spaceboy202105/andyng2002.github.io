@@ -2,31 +2,91 @@
 \input{style.tex}
 \hypersetup{pdftitle={吴靖宇 - 学术简历}}
 \begin{document}
-{\fontsize{27}{32}\selectfont\bfseries 吴靖宇}\hfill 学术简历
+{\fontsize{25}{29}\selectfont\bfseries 吴靖宇}\hfill 学术简历\quad andy
 
-{\large andy}
-
-\href{mailto:andyng@mail.ustc.edu.cn}{andyng@mail.ustc.edu.cn}\quad \href{https://github.com/spaceboy202105}{GitHub}
-
+\href{mailto:andyng@mail.ustc.edu.cn}{andyng@mail.ustc.edu.cn}\quad
+\href{https://github.com/spaceboy202105}{GitHub}\quad
 \href{https://orcid.org/0009-0004-7685-2901}{ORCID: 0009-0004-7685-2901}
+
 \section{教育经历}
-\textbf{中国科学技术大学}
+\textbf{中国科学技术大学}\quad 人工智能与数据科学学院\hfill 2024.09 - 2027.06（预计）
 
-智能科学与技术专业硕士研究生，在读
+智能科学与技术，硕士研究生
 
-{\small 2024.09 - 至今}
-\par\vspace{8pt}
-\textbf{合肥工业大学}
+\textbf{合肥工业大学}\quad 计算机与信息学院\hfill 2020.09 - 2024.06
 
-信息安全专业本科
+信息安全，本科
 
-{\small 2020.09 - 2024.06}
-\par\vspace{8pt}
 \section{研究兴趣}
+智能体工程；三维生成；自回归模型；计算机图形学；人工智能生成内容（AIGC）
+
+\section{研究与项目经历}
+\entry{Towards Valid B-Rep Generation: Training-Free Wireframe Anomaly Detection and Repair}{论文第一作者；CVM 期刊在投}{2025.12 - 2026.05}
+预印本：\href{https://arxiv.org/abs/2608.04955}{arXiv:2608.04955}
 \begin{itemize}
-\item 计算机图形学
-\item 三维生成
-\item 自回归模型
-\item 智能体工程
+\item 提出训练无关的 WDR 框架，在中间线框阶段结合 GTAD 异常检测与 EGGTR 能量引导修复，识别、路由并局部再生成自交、边塌缩、顶点断连等几何与拓扑风险；兼容自回归与扩散式 B-Rep 生成器，无需重新训练主模型。
+\item 集成至 DTGBrepGen、Stitch-A-Shape 与 BrepForge。在 3,000 个配对样本上，将 DTGBrepGen 的有效率从 79.5\% 提升至 95.6\%（DeepCAD）、从 68.1\% 提升至 83.9\%（ABC），同时基本保持生成多样性与分布质量。
 \end{itemize}
+\textbf{技术栈：}Python、PyTorch、Diffuser、PythonOCCT
+
+\entry{TrussOrbit: Edge-Orbit Sequence Modeling for Truss Metamaterial Inverse Design}{论文第一作者；ICLR 2027 在投}{2026.07 - 2026.09}
+\begin{itemize}
+\item 提出边轨道序列表示 EOTR，利用对称性联合编码节点几何与连接拓扑，以紧凑序列和对称展开重建完整桁架，支持目标刚度驱动的自回归逆向设计。
+\item 提出集合级强化学习方法 SMCO，以有限元反馈和空槽反事实评估分配序列级边际信用，结合 GSPO 联合优化刚度匹配与物理有效性。
+\item 在自建的 149 万结构统一基准上，基于刚度矩阵的单次逆向生成速度与重建误差优于所有对比基线，并支持更大的拓扑设计空间。
+\end{itemize}
+\textbf{技术栈：}Python、PyTorch、VeRL、SGLang
+
+\entry{基于编码智能体的自动科研系统}{主要负责人、核心贡献者}{2026.09 - 至今}
+\begin{itemize}
+\item 负责框架搭建、Idea Proposal 与自动化实验。基于 Codex SDK 实现可定制的科研构思模块，整合领域内及跨领域文献、已有实验资料与研究者输入，支持多轮人机交互和方案迭代。
+\item 生成包含研究空白、核心方法构想、引言配图及基线、数据集、评价指标的 Idea Package；据此确定实验类型、匹配模板、制定计划，通过 Codex 调度并监控实验。
+\item 汇总过程与结果为 Experimental Package，为后续论文生成模块提供实验依据，贯通科研构思、实验执行与结果交付。
+\end{itemize}
+\textbf{技术栈：}Codex SDK、Python
+
+\newpage
+\section{研究与项目经历（续）}
+\entry{基于自回归架构的线框生成模型}{项目负责人}{}
+\begin{itemize}
+\item 参加 CSIAM GDC 2026 “CAD Wireframe 神经压缩”挑战赛：EdgeGPT 初赛第 1 名，CurveGPT 决赛第 2 名。\href{https://mathmagic-official.github.io/AICAD/}{比赛主页}
+\item 从 EdgeGPT 迭代至 CurveGPT，以 GPT-style 自回归解码将 LINE、ARC、COMPLEX 曲线编码为可约束的类型化边语法；设计 HQVAE 将复杂曲线压缩为离散 RQ Tokens，以推理状态机约束生成，减少长序列格式崩溃。
+\item 清洗官方与 ABC 数据约 45 万条，搭建三阶段训练及完整评测流程。
+\end{itemize}
+\textbf{技术栈：}Python、PyTorch、Transformers
+
+\entry{基于分块的软光栅流水线系统的设计与实现}{本科毕业论文}{2023.12 - 2024.05}
+\begin{itemize}
+\item 独立实现 CUDA 可编程软光栅流水线，完成 Triangle Setup、Bin Raster、Coarse Raster、Fine Raster 四阶段设计、图元保序机制及交互式渲染系统。
+\item 面向现代 GPU 的正确性与可扩展性，重构 warp 级同步和线程安全接口，提出 CPU 调度的多-pass 4K 渲染方案，突破原有分辨率与并发限制。
+\item 结合动态共享内存分配、规约优化、Timer 插桩和 Nsight Compute 分析性能，定位 binning/coarse raster 瓶颈，推导当前架构下的近优 block 配置。
+\end{itemize}
+\textbf{技术栈：}C++、OpenGL、CUDA
+
+\entry{面向加密城市地图的支持无序途经点隐私导航系统}{论文第四作者、竞赛项目负责人}{2022.12 - 2023.06}
+\begin{itemize}
+\item 作为核心贡献者参与 Semi-Constrained Navigation 算法研究，相关成果发表于 IEEE TDSC（CCF-A）；面向加密城市地图上 $k$ 个无序途经点导航，兼顾准确性、隐私与查询效率。
+\item 提出预计算加速策略，将关键同态加密算子的执行效率提升 3--6 倍；参与路径距离 oracle、加密查询及云端算路逻辑设计。
+\item 以 Java、JPBC、Spring Boot 实现密钥管理、密文通信和查询服务的后端交互链路，验证城域地图规模下的实时性与可用性。
+\end{itemize}
+\textbf{技术栈：}Java、JPBC、Spring Boot
+
+\section{奖励与荣誉}
+\begin{itemize}
+\item 2026.07\quad CSIAM GDC 2026 “CAD Wireframe 神经压缩”挑战赛第二名
+\item 2024.11\quad 安徽省计算机学会优秀本科毕业设计（论文）（省级）
+\item 2024.06\quad 合肥工业大学优秀毕业生（校级）
+\item 2022.12\quad 全国高校计算机能力挑战赛 C++ 组全国一等奖（国家级）
+\item 2022.12\quad 国家奖学金（国家级）
+\item 2022.07\quad 安徽省机器人大赛程序设计赛道本科组三等奖（省级）
+\end{itemize}
+
+\section{专业技能}
+\textbf{计算机基础：}数据结构与算法、计算机网络、操作系统、GPU 体系结构，支持模型训练、系统开发与性能优化。
+
+\textbf{编程语言：}熟悉 Python、C/C++、CUDA、Java，能独立完成算法开发、工程实现与问题定位。
+
+\textbf{训练工具：}熟悉 PyTorch、Transformers、DeepSpeed，具备训练流水线搭建与分布式训练加速经验。
+
+\textbf{AI 效率工具：}设计基于大模型的代码辅助开发、文献调研与技术理解工作流，支持开发及研究迭代。
 \end{document}

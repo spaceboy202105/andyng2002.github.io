@@ -44,6 +44,8 @@ Only Blog files have Markdown bodies. Use headings for the generated table of co
 
 ## Rebuild and inspect CVs
 
+The downloadable CVs include the research, projects, awards and skills from the owner-selected resume. CV inclusion does not approve a corresponding homepage or collection entry; those still require a separate owner decision.
+
 Edit the approved public details in `cv/zh.tex` and `cv/en.tex`, with shared formatting in `cv/style.tex`. The sources are trusted, reviewed site inputs; this is not a service for arbitrary uploaded TeX. Never use an old CV or sanitized reference PDF as the public version.
 
 ```sh
