@@ -1,10 +1,10 @@
 import path from 'node:path';
 import { existsSync, realpathSync } from 'node:fs';
 
-export function readSiteConfig() {
+export function readSiteConfig(env = process.env) {
   const root = realpathSync(process.cwd());
   const directory = (name, fallback) => {
-    const requested = path.resolve(root, process.env[name] ?? fallback);
+    const requested = path.resolve(root, env[name] ?? fallback);
     let existing = requested;
     while (!existsSync(existing)) existing = path.dirname(existing);
     const resolved = path.resolve(realpathSync(existing), path.relative(existing, requested));
@@ -14,12 +14,12 @@ export function readSiteConfig() {
     }
     return resolved;
   };
-  const site = new URL(process.env.SITE_URL ?? 'http://127.0.0.1:4321');
+  const site = new URL(env.SITE_URL ?? 'http://127.0.0.1:4321');
   if (!['http:', 'https:'].includes(site.protocol) || site.pathname !== '/' || site.search || site.hash || site.username || site.password) {
     throw new Error('SITE_URL must be an http or https origin without a path or credentials');
   }
-  const inputBase = process.env.SITE_BASE_PATH ?? '/';
-  if (!/^(?:\/|\/[A-Za-z0-9_-]+(?:\/[A-Za-z0-9_-]+)*\/?)$/.test(inputBase)) throw new Error('SITE_BASE_PATH must be a local path such as / or /preview/');
+  const inputBase = env.SITE_BASE_PATH ?? '/';
+  if (!/^(?:\/|\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*\/?)$/.test(inputBase) || inputBase.split('/').some(part => part === '.' || part === '..')) throw new Error('SITE_BASE_PATH must be a local path such as / or /preview/');
   const base = inputBase === '/' ? '/' : `${inputBase.replace(/\/$/, '')}/`;
   const contentDir = directory('SITE_CONTENT_DIR', 'src/content');
   const publicDir = directory('SITE_PUBLIC_DIR', 'public');

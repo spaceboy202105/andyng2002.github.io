@@ -17,6 +17,7 @@ export default defineConfig({
       SITE_URL: origin,
       SITE_BASE_PATH: '/',
       SITE_CONTENT_DIR: 'tests/fixtures/content',
+      CV_SOURCE_DIR: 'tests/fixtures/cv',
       SITE_PUBLIC_DIR: 'tests/fixtures/public',
       SITE_OUTPUT_DIR: '.test-dist',
     },

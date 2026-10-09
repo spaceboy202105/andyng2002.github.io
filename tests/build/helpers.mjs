@@ -10,6 +10,7 @@ export async function withSite(run) {
     await mkdir(path.join(directory, 'public'));
     const env = {
       ...process.env,
+      CV_SOURCE_DIR: 'tests/fixtures/cv',
       SITE_URL: 'http://127.0.0.1:4321', SITE_BASE_PATH: '/',
       SITE_CONTENT_DIR: path.join(directory, 'content'),
       SITE_PUBLIC_DIR: path.join(directory, 'public'),
