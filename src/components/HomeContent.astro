@@ -28,3 +28,24 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
   <header class="section-header"><h2 id="blog-title">{locale === 'en' ? 'Latest writing' : '最新文章'}</h2><a href={pageHref({locale,target:{kind:'blog'}})}>{locale === 'en' ? 'All articles' : '全部文章'} ↗</a></header>
   <BlogList locale={locale} entries={latest}/>
 </section>}
+
+{profile.data.education.length > 0 && <section class="home-section" id="education" aria-labelledby="education-title">
+  <header class="section-header"><h2 id="education-title">{locale === 'en' ? 'Education' : '教育经历'}</h2></header>
+  <ul class="experience-list">
+    {profile.data.education.map(entry => <li>
+      <div class="experience-heading"><h3>{entry.institution[locale]}</h3><p>{entry.period[locale]}</p></div>
+      <p>{entry.school[locale]}</p>
+      <p>{entry.degree[locale]}</p>
+      <p>{locale === 'en' ? 'Advisor: ' : '指导老师：'}<a href={entry.advisor.href}>{entry.advisor.name[locale]}</a></p>
+    </li>)}
+  </ul>
+</section>}
+{profile.data.internships.length > 0 && <section class="home-section" id="internships" aria-labelledby="internships-title">
+  <header class="section-header"><h2 id="internships-title">{locale === 'en' ? 'Internships' : '实习经历'}</h2></header>
+  <ul class="experience-list">
+    {profile.data.internships.map(entry => <li>
+      <div class="experience-heading"><h3>{entry.company[locale]} · {entry.location[locale]}</h3><p>{entry.period[locale]}</p></div>
+      <p>{entry.role[locale]}</p>
+    </li>)}
+  </ul>
+</section>}

@@ -10,7 +10,7 @@ for (const width of [1280, 360]) test(`homepage combines only featured work and 
   await expect(page.getByText('Unapproved Paper', { exact: true })).toHaveCount(0);
   await expect(page.locator('.blog-list h2 a')).toHaveText(['Newest Research Note', '示例研究文章', 'Middle Research Note']);
   await expect(page.getByRole('link', { name: '单语研究记录', exact: true })).toHaveCount(0);
-  expect(await page.locator('main > section').evaluateAll(sections => sections.map(section => section.id))).toEqual(['profile', 'research', 'projects', 'blog']);
+  expect(await page.locator('main > section').evaluateAll(sections => sections.map(section => section.id))).toEqual(['profile', 'research', 'projects', 'blog', 'education', 'internships']);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 

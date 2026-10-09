@@ -77,3 +77,21 @@ test('long unbroken biography stays within a narrow viewport', async ({ page }, 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   await page.screenshot({ path: testInfo.outputPath('long-bio.png'), fullPage: true });
 });
+
+for (const locale of ['en', 'zh']) {
+  test(`education and internships render in ${locale} on desktop and mobile`, async ({ page }) => {
+    for (const width of [1280, 320]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(`/${locale}/`);
+      const education = page.locator('#education');
+      await expect(education.getByRole('heading', { name: locale === 'en' ? 'Example University' : '示例大学' })).toBeVisible();
+      await expect(education.getByRole('link', { name: locale === 'en' ? 'Example Advisor' : '示例导师' })).toHaveAttribute('href', 'https://example.org/advisor');
+      await expect(education).toContainText(locale === 'en' ? '2024 - 2027 (expected)' : '2024 - 2027（预计）');
+      const internships = page.locator('#internships');
+      await expect(internships).toContainText(locale === 'en' ? 'Example Company · Example City' : '示例公司 · 示例城市');
+      await expect(internships).toContainText(locale === 'en' ? 'Example Researcher' : '示例研究员');
+      await expect(internships).toContainText(locale === 'en' ? '2026 - Present' : '2026 - 至今');
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    }
+  });
+}

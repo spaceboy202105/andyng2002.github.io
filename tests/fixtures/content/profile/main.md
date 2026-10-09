@@ -11,6 +11,19 @@ portrait: ../../assets/portrait.png
 portraitAlt:
   en: Synthetic portrait
   zh: 合成测试照片
+education:
+  - institution: {en: Example University, zh: 示例大学}
+    school: {en: Example School, zh: 示例学院}
+    degree: {en: Example degree, zh: 示例学位}
+    period: {en: "2024 - 2027 (expected)", zh: "2024 - 2027（预计）"}
+    advisor:
+      name: {en: Example Advisor, zh: 示例导师}
+      href: https://example.org/advisor
+internships:
+  - company: {en: Example Company, zh: 示例公司}
+    location: {en: Example City, zh: 示例城市}
+    role: {en: Example Researcher, zh: 示例研究员}
+    period: {en: "2026 - Present", zh: "2026 - 至今"}
 contacts:
   - label: Email
     href: mailto:researcher@example.org
