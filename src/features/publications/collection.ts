@@ -19,7 +19,7 @@ export const publications = defineCollection({
     venue: z.string().trim().min(1).optional(),
     paperUrl: externalUrl.optional(),
     codeUrl: externalUrl.optional(),
-    cover: z.preprocess(localImagePath, image()).optional(),
-    coverAlt: localizedText.optional(),
-  }).refine(entry => !entry.cover || entry.coverAlt, { message: 'coverAlt requires both languages when cover is present', path: ['coverAlt'] }),
+    cover: z.preprocess(localImagePath, image()),
+    coverAlt: localizedText,
+  }),
 });

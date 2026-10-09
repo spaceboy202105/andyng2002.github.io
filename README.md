@@ -32,9 +32,11 @@ Content lives in `src/content`. A Markdown filename is its stable identifier. `a
 | Collection | Required public fields | Optional fields |
 | --- | --- | --- |
 | `profile/main.md` | `approved`, `brand`, bilingual `name`, `bio`, `portraitAlt`, `portrait`, `contacts` with `label` and `href` | None |
-| `publications/<id>.md` | `approved`, formal `title`, ordered `authors`, `year`, `status`, bilingual `summary` | `featured`, `venue`, `paperUrl`, `codeUrl`, `cover` with bilingual `coverAlt` |
+| `publications/<id>.md` | `approved`, formal `title`, ordered `authors`, `year`, `status`, bilingual `summary`, `cover`, bilingual `coverAlt` | `featured`, `venue`, `paperUrl`, `codeUrl` |
 | `projects/<id>.md` | `approved`, bilingual `name`, `summary`, `role`, `coverAlt`, `cover` | `featured`, `date`, `codeUrl`, `demoUrl` |
 | `blog/<version-id>.md` | `approved`, `storyId`, `lang`, `originalLang`, `title`, `publishedAt`, `tags`, Markdown body | `updatedAt`, `summary`, `relatedPublications`, `relatedProjects` |
+
+Publication images appear to the left of the text on desktop and above it on narrow screens. Every approved paper requires a real representative figure and bilingual alternative text. `src/assets/wdr-teaser.png` is the unmodified Figure 1 from the [WDR arXiv HTML](https://arxiv.org/html/2608.04955v2/teaser.png), showing WDR-guided regeneration results. Astro generates the web image from this approved source.
 
 Publication authors can be plain names or objects with `name` and an HTTP or HTTPS `url`. Their array order is the displayed author order. Links to `arxiv.org` use the label `arXiv`; other paper links use the localized paper label.
 
