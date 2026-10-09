@@ -31,6 +31,7 @@ for (const [label, before, after, error] of [
   ['safe URL', 'https://example.org/paper', 'javascript:alert(1)', /paperUrl/],
   ['safe author URL', 'https://example.org/researcher-two', 'javascript:alert(1)', /authors/],
   ['author name', 'name: Researcher Two', 'name: " "', /authors/],
+  ['representative image', 'cover: ../../assets/portrait.png\n', '', /cover/],
   ['image alternative', '  zh: 示例研究图\n', '', /coverAlt/],
 ]) test(`publication requires ${label}`, async () => {
   await withSite(async ({ directory, build }) => {

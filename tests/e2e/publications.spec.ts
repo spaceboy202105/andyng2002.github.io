@@ -26,3 +26,25 @@ for (const locale of ['en', 'zh']) test(`${locale} author links preserve ordered
     await expect(authors.getByRole('link')).toHaveCount(1);
   }
 });
+
+for (const locale of ['en', 'zh']) test(`${locale} every paper has a loaded representative image beside desktop text and above mobile text`, async ({ page }) => {
+  for (const width of [1280, 360]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of [`/${locale}/`, `/${locale}/publications/`]) {
+      await page.goto(route);
+      const papers = page.locator('article').filter({ has: page.locator('.authors') });
+      expect(await papers.count()).toBeGreaterThan(0);
+      for (const paper of await papers.all()) {
+        const image = paper.getByRole('img');
+        await expect(image).toBeVisible();
+        await expect(image).not.toHaveAttribute('alt', '');
+        expect(await image.evaluate(el => el instanceof HTMLImageElement && el.complete && el.naturalWidth > 0)).toBe(true);
+        const figure = (await image.boundingBox())!;
+        const title = (await paper.getByRole('heading').boundingBox())!;
+        if (width > 680) expect(figure.x + figure.width).toBeLessThanOrEqual(title.x);
+        else expect(figure.y + figure.height).toBeLessThanOrEqual(title.y);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    }
+  }
+});

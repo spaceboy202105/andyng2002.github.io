@@ -13,8 +13,8 @@ const statuses = {
 };
 ---
 <div class="publication-list">
-  {entries.map(({ id, data }) => <article class:list={['publication', { 'with-cover': data.cover }]} id={id}>
-    {data.cover && <Image src={data.cover} alt={data.coverAlt?.[locale] ?? ''} width={600} class="publication-cover"/>}
+  {entries.map(({ id, data }) => <article class="publication" id={id}>
+    <Image src={data.cover} alt={data.coverAlt[locale]} width={600} class="publication-cover"/>
     <div>
       <p class="entry-meta">{data.year} · <span>{statuses[locale][data.status]}</span>{data.venue && ` · ${data.venue}`}</p>
       <h2>{data.title}</h2>
