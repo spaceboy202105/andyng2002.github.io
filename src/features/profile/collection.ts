@@ -12,6 +12,13 @@ export const profile = defineCollection({
     bio: localizedText,
     portrait: z.preprocess(localImagePath, image()),
     portraitAlt: localizedText,
+    thesis: z.object({
+      title: localizedText,
+      summary: localizedText,
+      institution: localizedText,
+      year: z.number().int().positive(),
+      pdfPath: z.literal('papers/undergraduate-thesis.pdf'),
+    }).optional(),
     education: z.array(z.object({
       institution: localizedText,
       school: localizedText,

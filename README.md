@@ -31,12 +31,14 @@ Content lives in `src/content`. A Markdown filename is its stable identifier. `a
 
 | Collection | Required public fields | Optional fields |
 | --- | --- | --- |
-| `profile/main.md` | `approved`, `brand`, bilingual `name`, `bio`, `portraitAlt`, `portrait`, `contacts` with `label` and `href` | `education`, `internships` |
+| `profile/main.md` | `approved`, `brand`, bilingual `name`, `bio`, `portraitAlt`, `portrait`, `contacts` with `label` and `href` | `thesis`, `education`, `internships` |
 | `publications/<id>.md` | `approved`, formal `title`, ordered `authors`, `year`, `status`, bilingual `summary`, `cover`, bilingual `coverAlt` | `featured`, `venue`, `paperUrl`, `codeUrl` |
 | `projects/<id>.md` | `approved`, bilingual `name`, `summary`, `role`, `coverAlt`, `cover` | `featured`, `date`, `codeUrl`, `demoUrl` |
 | `blog/<version-id>.md` | `approved`, `storyId`, `lang`, `originalLang`, `title`, `publishedAt`, `tags`, Markdown body | `updatedAt`, `summary`, `relatedPublications`, `relatedProjects` |
 
 Publication images appear to the left of the text on desktop and above it on narrow screens. Every approved paper requires a real representative figure and bilingual alternative text. `src/assets/wdr-teaser.png` is the unmodified Figure 1 from the [WDR arXiv HTML](https://arxiv.org/html/2608.04955v2/teaser.png), showing WDR-guided regeneration results. Astro generates the web image from this approved source.
+
+The optional profile `thesis` contains bilingual `title`, `summary`, and `institution`, an integer `year`, and `pdfPath: papers/undergraduate-thesis.pdf`. It adds the undergraduate thesis section before education on both homepages. Keep the approved PDF at `public/papers/undergraduate-thesis.pdf`; the build fails if its link cannot resolve. The Chinese PDF is a public reading copy rebuilt from the 2024 source, with private administrative fields omitted. Removing `thesis` hides the section; remove the PDF as well when withdrawing public access.
 
 Profile education entries contain bilingual `institution`, `school`, `degree`, `period`, and an `advisor` with bilingual `name` and an HTTP or HTTPS `href`. Internship entries contain bilingual `company`, `location`, `role`, and `period`, with optional `companyHref` containing an HTTP or HTTPS URL for each language. Empty experience arrays produce no homepage section.
 

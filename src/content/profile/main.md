@@ -11,6 +11,18 @@ portrait: ../../assets/portrait.jpg
 portraitAlt:
   en: Jingyu Wu outdoors
   zh: 吴靖宇的户外照片
+thesis:
+  title:
+    en: The Design and Implementation of a Tile-Based Software Rasterization Pipeline System
+    zh: 基于分块的软光栅流水线系统的设计与实现
+  summary:
+    en: This thesis adapts CUDARaster to modern GPUs, with thread-safe warp primitives, CPU-scheduled 4K rendering, and an improved reduction algorithm.
+    zh: 本文研究 CUDARaster 在现代 GPU 上的适配，涉及线程束级原语的线程安全、由 CPU 调度的 4K 渲染和归约算法改进。
+  institution:
+    en: Hefei University of Technology
+    zh: 合肥工业大学
+  year: 2024
+  pdfPath: papers/undergraduate-thesis.pdf
 education:
   - institution:
       en: University of Science and Technology of China (USTC)
