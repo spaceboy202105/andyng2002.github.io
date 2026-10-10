@@ -119,7 +119,7 @@ CV 收录与网页条目展示是两项独立决定。新版 CV 可以包含原�
 
 ### 信息安全论文（2026-10-10 用户确认）
 
-用户要求加入其为第四作者的信息安全论文 Accurate, Secure, and Efficient Semi-Constrained Navigation Over Encrypted City Maps。中英文首页 Research 及学术成果完整列表显示该论文、正式作者顺序、真实代表图与双语简介。使用正式卷期年份 2025，期刊为 IEEE Transactions on Dependable and Secure Computing, 22(3), 2642–2658，DOI 为 10.1109/TDSC.2024.3521396。论文入口链接出版方，不在本站托管该论文 PDF。2024 是提前在线发表年份，与正式卷期年份区分；来源记录见 `docs/hermes-publication.md`。WDR 继续只出现在完整列表，不恢复首页精选。
+用户要求加入其为第四作者的信息安全论文 Accurate, Secure, and Efficient Semi-Constrained Navigation Over Encrypted City Maps。中英文首页 Research 及学术成果完整列表显示该论文、正式作者顺序、真实代表图与双语简介。使用正式卷期年份 2025，期刊为 IEEE Transactions on Dependable and Secure Computing, 22(3), 2642–2658，DOI 为 10.1109/TDSC.2024.3521396。论文入口链接出版方，不在本站托管该论文 PDF。2024 是提前在线发表年份，与正式卷期年份区分；来源记录见 `docs/hermes-publication.md`。作者列表仅将本站所有者的姓名加粗，保留原顺序与作者链接；不另写“第四作者”说明。本科毕业论文作者使用相同的加粗方式。WDR 继续只出现在完整列表，不恢复首页精选。
 
 ### 技术组织与职责
 

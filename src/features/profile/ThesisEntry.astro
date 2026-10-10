@@ -11,7 +11,7 @@ const thesis = profile.data.thesis;
   <div>
     <p class="entry-meta">{thesis.year} · <span>{locale === 'en' ? 'Undergraduate thesis' : '本科毕业论文 / Undergraduate thesis'}</span> · {thesis.institution[locale]}</p>
     <h2>{thesis.title[locale]}</h2>
-    <p class="authors">{profile.data.name[locale]}</p>
+    <p class="authors"><strong>{profile.data.name[locale]}</strong></p>
     <p>{thesis.summary[locale]}</p>
     <div class="entry-links"><a href={assetHref(thesis.pdfPath)}>{locale === 'en' ? 'Chinese PDF' : '中文 PDF'}</a></div>
   </div>

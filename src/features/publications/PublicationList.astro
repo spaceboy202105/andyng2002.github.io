@@ -2,10 +2,12 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { pageHref, type Locale } from '../../i18n';
+import { getProfile } from '../profile/content';
 import { getBlogEntries, selectStories } from '../blog/content';
 interface Props { locale: Locale; entries: CollectionEntry<'publications'>[] }
 const { locale, entries } = Astro.props;
-const versions = await getBlogEntries();
+const [versions, profile] = await Promise.all([getBlogEntries(), getProfile()]);
+const ownNames = [profile.data.name.en, profile.data.name.zh];
 const stories = selectStories({ entries: versions, locale });
 const statuses = {
   en: { preprint: 'Preprint', submitted: 'Submitted, decision pending', accepted: 'Accepted', published: 'Published' },
@@ -18,7 +20,11 @@ const statuses = {
     <div>
       <p class="entry-meta">{data.year} · <span>{statuses[locale][data.status]}</span>{data.venue && ` · ${data.venue}`}</p>
       <h2>{data.title}</h2>
-      <p class="authors">{data.authors.map((author, index) => <>{index > 0 && ', '}{typeof author === 'string' ? author : <a href={author.url}>{author.name}</a>}</>)}</p>
+      <p class="authors">{data.authors.map((author, index) => {
+        const name = typeof author === 'string' ? author : author.name;
+        const label = typeof author === 'string' ? author : <a href={author.url}>{author.name}</a>;
+        return <>{index > 0 && ', '}{ownNames.includes(name) ? <strong>{label}</strong> : label}</>;
+      })}</p>
       <p>{data.summary[locale]}</p>
       <div class="entry-links">
         {data.paperUrl && <a href={data.paperUrl}>{new URL(data.paperUrl).hostname === 'arxiv.org' ? 'arXiv' : locale === 'en' ? 'Paper' : '论文'}</a>}

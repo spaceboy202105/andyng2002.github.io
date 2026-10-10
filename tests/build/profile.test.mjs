@@ -146,6 +146,7 @@ for (const base of ['/', '/preview/']) {
           assert.ok(html.includes(`href="${base}papers/undergraduate-thesis.pdf"`), html);
           assert.ok(html.includes(label), html);
           assert.match(html, /Undergraduate thesis/);
+          assert.match(html, /<p class="authors"><strong>(?:Test Researcher|测试研究者)<\/strong><\/p>/);
           assert.match(html, /<article class="publication" id="thesis">[\s\S]*?<img[^>]+alt="(?:Synthetic thesis figure|合成毕业论文图)"/);
           assert.doesNotMatch(html, /<section[^>]+id="thesis"/);
           if (!route) {
@@ -175,5 +176,25 @@ test('an undergraduate thesis with a missing PDF fails the build', async () => {
     const result = build();
     assert.notEqual(result.status, 0, log(result));
     assert.match(log(result), /Missing local target[^\n]*papers\/undergraduate-thesis\.pdf/);
+  });
+});
+
+
+test('author lists bold only the profile owner and preserve linked author order', async () => {
+  await withSite(async ({ directory, build }) => {
+    const file = path.join(directory, 'content/publications/featured.md');
+    const original = await readFile(file, 'utf8');
+    await writeFile(file, original.replace('  - Researcher One', '  - Test Researcher\n  - Researcher One').replace('name: Researcher Two', 'name: 测试研究者'));
+    const result = build();
+    assert.equal(result.status, 0, log(result));
+    for (const locale of ['en', 'zh']) {
+      for (const route of ['', 'publications/']) {
+        const html = await readFile(path.join(directory, `dist/${locale}/${route}index.html`), 'utf8');
+        const authors = html.match(/<p class="authors"[^>]*>([\s\S]*?)<\/p>/)?.[1];
+        assert.ok(authors, html);
+        assert.match(authors, /<strong[^>]*>Test Researcher<\/strong>, Researcher One, <strong[^>]*><a[^>]*href="https:\/\/example\.org\/researcher-two"[^>]*>测试研究者<\/a><\/strong>/);
+        assert.equal((authors.match(/<strong/g) ?? []).length, 2);
+      }
+    }
   });
 });
