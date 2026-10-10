@@ -7,7 +7,7 @@ import ProjectGrid from '../features/projects/ProjectGrid.astro';
 import { getProjects } from '../features/projects/content';
 import BlogList from '../features/blog/BlogList.astro';
 import { getBlogEntries, selectStories } from '../features/blog/content';
-import { pageHref, type Locale } from '../i18n';
+import { assetHref, pageHref, type Locale } from '../i18n';
 interface Props { locale: Locale; profile: Profile }
 const { locale, profile } = Astro.props;
 const [publications, projects, articles] = await Promise.all([getPublications(), getProjects(), getBlogEntries()]);
@@ -29,6 +29,15 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
   <BlogList locale={locale} entries={latest}/>
 </section>}
 
+{profile.data.thesis && <section class="home-section experience-section" id="thesis" aria-labelledby="thesis-title">
+  <header class="section-header"><h2 id="thesis-title">{locale === 'en' ? 'Undergraduate thesis' : '本科毕业论文'}</h2></header>
+  <ul class="experience-list"><li>
+    <div class="experience-heading"><h3>{profile.data.thesis.title[locale]}</h3><p>{profile.data.thesis.year}</p></div>
+    <p>{profile.data.name[locale]} · {profile.data.thesis.institution[locale]}</p>
+    <p>{profile.data.thesis.summary[locale]}</p>
+    <p><a href={assetHref(profile.data.thesis.pdfPath)}>{locale === 'en' ? 'Chinese PDF' : '中文 PDF'} ↗</a></p>
+  </li></ul>
+</section>}
 {profile.data.education.length > 0 && <section class="home-section experience-section" id="education" aria-labelledby="education-title">
   <header class="section-header"><h2 id="education-title">{locale === 'en' ? 'Education' : '教育经历'}</h2></header>
   <ul class="experience-list">

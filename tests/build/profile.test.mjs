@@ -116,3 +116,49 @@ test('omitted education and internships do not create empty homepage sections', 
     assert.doesNotMatch(html, /id="(?:education|internships)"/);
   });
 });
+
+const thesis = `thesis:
+  title: {en: Synthetic undergraduate thesis, zh: 合成本科毕业论文}
+  summary: {en: A synthetic thesis summary., zh: 合成论文简介。}
+  institution: {en: Example University, zh: 示例大学}
+  year: 2024
+  pdfPath: papers/undergraduate-thesis.pdf
+`;
+
+for (const base of ['/', '/preview/']) {
+  test(`undergraduate thesis links resolve on both homepages under ${base}`, async () => {
+    await withSite(async ({ directory, build }) => {
+      const file = path.join(directory, 'content/profile/main.md');
+      const original = await readFile(file, 'utf8');
+      await writeFile(file, original.replace('contacts:', `${thesis}contacts:`));
+      await mkdir(path.join(directory, 'public/papers'));
+      await writeFile(path.join(directory, 'public/papers/undergraduate-thesis.pdf'), '%PDF-1.4\n%%EOF\n');
+      const result = build({ SITE_BASE_PATH: base });
+      assert.equal(result.status, 0, log(result));
+      for (const [locale, title, label] of [['en', 'Synthetic undergraduate thesis', 'Chinese PDF'], ['zh', '合成本科毕业论文', '中文 PDF']]) {
+        const html = await readFile(path.join(directory, `dist/${locale}/index.html`), 'utf8');
+        assert.ok(html.includes(title), html);
+        assert.ok(html.includes(`href="${base}papers/undergraduate-thesis.pdf"`), html);
+        assert.ok(html.includes(label), html);
+        assert.ok(html.indexOf('id="thesis"') < html.indexOf('id="education"'), html);
+      }
+      await writeFile(file, original);
+      const removed = build({ SITE_BASE_PATH: base });
+      assert.equal(removed.status, 0, log(removed));
+      for (const locale of ['en', 'zh']) {
+        const html = await readFile(path.join(directory, `dist/${locale}/index.html`), 'utf8');
+        assert.doesNotMatch(html, /id="thesis"|papers\/undergraduate-thesis\.pdf/);
+      }
+    });
+  });
+}
+
+test('an undergraduate thesis with a missing PDF fails the build', async () => {
+  await withSite(async ({ directory, build }) => {
+    const file = path.join(directory, 'content/profile/main.md');
+    await writeFile(file, (await readFile(file, 'utf8')).replace('contacts:', `${thesis}contacts:`));
+    const result = build();
+    assert.notEqual(result.status, 0, log(result));
+    assert.match(log(result), /Missing local target[^\n]*papers\/undergraduate-thesis\.pdf/);
+  });
+});
