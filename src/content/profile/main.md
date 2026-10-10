@@ -12,6 +12,10 @@ portraitAlt:
   en: Jingyu Wu outdoors
   zh: 吴靖宇的户外照片
 thesis:
+  cover: ../../assets/thesis-cover.png
+  coverAlt:
+    en: CUDARaster pipeline structure from the tile-based software rasterization undergraduate thesis.
+    zh: 基于分块的软光栅流水线本科毕业论文中的 CUDARaster 流水线结构图。
   title:
     en: The Design and Implementation of a Tile-Based Software Rasterization Pipeline System
     zh: 基于分块的软光栅流水线系统的设计与实现

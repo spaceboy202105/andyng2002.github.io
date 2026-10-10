@@ -13,6 +13,8 @@ export const profile = defineCollection({
     portrait: z.preprocess(localImagePath, image()),
     portraitAlt: localizedText,
     thesis: z.object({
+      cover: z.preprocess(localImagePath, image()),
+      coverAlt: localizedText,
       title: localizedText,
       summary: localizedText,
       institution: localizedText,
