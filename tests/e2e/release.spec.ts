@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const pages = ['en/', 'zh/', 'en/publications/', 'zh/publications/', 'en/projects/', 'zh/projects/', 'en/blog/', 'zh/blog/', ...['sample-study', 'chinese-only', 'middle', 'newest'].flatMap(story => [`en/blog/${story}/`, `zh/blog/${story}/`]), '404.html'];
+const pages = ['en/', 'zh/', 'en/publications/', 'zh/publications/', 'en/projects/', 'zh/projects/', 'en/blog/', 'zh/blog/', ...['en', 'zh'].flatMap(locale => [`${locale}/works/`, `${locale}/films/`, `${locale}/films/review/`, `${locale}/films/older/`]), ...['sample-study', 'chinese-only', 'middle', 'newest'].flatMap(story => [`en/blog/${story}/`, `zh/blog/${story}/`]), '404.html'];
 
 test('every subpath page loads local resources, CVs and fits mobile', async ({ page, request }, testInfo) => {
   const broken: string[] = [];
@@ -16,7 +16,11 @@ test('every subpath page loads local resources, CVs and fits mobile', async ({ p
     await page.goto(`/preview/${target}`);
     await expect(page.locator('h1')).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), target).toBe(true);
-    for (const image of await page.locator('img').all()) expect(await image.evaluate(el => el instanceof HTMLImageElement && el.complete && el.naturalWidth > 0), target).toBe(true);
+    for (const image of await page.locator('img').all()) {
+      await image.scrollIntoViewIfNeeded();
+      await image.evaluate(el => (el as HTMLImageElement).decode());
+      expect(await image.evaluate(el => el instanceof HTMLImageElement && el.naturalWidth > 0), target).toBe(true);
+    }
   }
   await page.goto('/preview/en/blog/sample-study/');
   await page.screenshot({ path: testInfo.outputPath('subpath-mobile-article.png'), fullPage: true });

@@ -6,6 +6,9 @@ export type PageTarget =
   | { kind: 'publications' }
   | { kind: 'projects' }
   | { kind: 'blog' }
+  | { kind: 'works' }
+  | { kind: 'films' }
+  | { kind: 'filmReview'; id: string }
   | { kind: 'article'; storyId: string };
 
 export function assetHref(path: string): string {
@@ -17,6 +20,9 @@ export function pageHref({ locale, target }: { locale: Locale; target: PageTarge
     case 'home': return assetHref(`${locale}/`);
     case 'publications': return assetHref(`${locale}/publications/`);
     case 'projects': return assetHref(`${locale}/projects/`);
+    case 'works': return assetHref(`${locale}/works/`);
+    case 'films': return assetHref(`${locale}/films/`);
+    case 'filmReview': return assetHref(`${locale}/films/${encodeURIComponent(target.id)}/`);
     case 'blog': return assetHref(`${locale}/blog/`);
     case 'article': return assetHref(`${locale}/blog/${encodeURIComponent(target.storyId)}/`);
   }

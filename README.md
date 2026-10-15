@@ -74,3 +74,13 @@ Inspect every rendered page and extracted text for private fields, missing chara
 Pull requests run `.github/workflows/verify.yml` with read-only repository permission and no deployment. `.github/workflows/deploy.yml` runs on pushes to `master` and can also be started manually on `master`. It runs the entire release check before uploading only `dist`; deployment depends on that successful job and uses the `github-pages` environment with Pages and identity-token write permissions.
 
 Repository Pages settings must use GitHub Actions and the environment must allow `master`. Confirm those settings, run the manual workflow, then inspect the actual site and both downloadable PDFs. Each subsequent `master` update follows the same checked build and deployment sequence. A failing build cannot upload or deploy new output through this workflow.
+
+### Works 与 Films
+
+两个栏目目前留空，等待所有者提供并批准内容。不要从 raw/ 自动导入。
+
+作品放在 `src/content/works/<小写短横线ID>.md`。字段为 `approved: true`、中英文 `title`、`image: ../../assets/文件名.jpg` 和中英文 `imageAlt`，正文留空。导入照片前移除 GPS 等 EXIF 隐私信息，只将批准后的公开副本放进 `src/assets/`。页面按文件名排序，图片保留自然比例。
+
+影评放在 `src/content/films/<小写短横线ID>.md`。字段为 `approved: true`、`title`、`lang: zh`（或 `en`）和 `publishedAt: YYYY-MM-DD`，下方写 Markdown 正文。两种界面显示同一正文并注明语言；列表按发布日期倒序。图片、链接和 HTML 限制与 Blog 相同。未批准条目使用 `approved: false`，不参与校验或构建输出。
+
+爱好条目保留 `en`、`zh`，并填写 `icon`，可选 `camera`、`music`、`badminton`、`dumbbell`、`film`。项目配图仍使用成对的 `cover` 和中英文 `coverAlt`；未提供图片时两者均省略。

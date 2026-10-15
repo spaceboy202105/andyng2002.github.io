@@ -12,15 +12,15 @@ export function safeMarkdown({ base, publicDir }) {
       if (node.type === 'linkReference') linkReferences.add(node.identifier.toUpperCase());
     });
     visit(tree, node => {
-      if (node.type === 'html') file.fail('Raw HTML is not allowed in Blog Markdown', node);
+      if (node.type === 'html') file.fail('Raw HTML is not allowed in Markdown', node);
       if (!['link', 'image', 'definition'].includes(node.type)) return;
       const isImage = node.type === 'image' || (node.type === 'definition' && imageReferences.has(node.identifier.toUpperCase()));
       let url;
       try { url = decodeURIComponent(node.url); }
-      catch { file.fail('Invalid URL encoding in Blog Markdown', node); }
-      if (/[\u0000-\u0020\\]/.test(url) || url.startsWith('//')) file.fail('Unsafe URL in Blog Markdown', node);
+      catch { file.fail('Invalid URL encoding in Markdown', node); }
+      if (/[\u0000-\u0020\\]/.test(url) || url.startsWith('//')) file.fail('Unsafe URL in Markdown', node);
       if (/^https?:\/\//.test(node.url)) {
-        try { new URL(node.url); } catch { file.fail('Invalid external URL in Blog Markdown', node); }
+        try { new URL(node.url); } catch { file.fail('Invalid external URL in Markdown', node); }
         return;
       }
       if (url.startsWith('#') && !isImage) return;
@@ -31,7 +31,7 @@ export function safeMarkdown({ base, publicDir }) {
       }
       if (url.startsWith('/') && !url.split(/[/?#]/).includes('..')) {
         const target = url.split(/[?#]/)[0].slice(1);
-        const page = /^(?:en|zh)\/(?:|publications\/|projects\/|blog\/(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?)$/.test(target);
+        const page = /^(?:en|zh)\/(?:|publications\/|projects\/|works\/|(?:blog|films)\/(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)?)$/.test(target);
         const asset = publicFiles.includes(target) && existsSync(path.join(publicDir, target));
         if ((page && !isImage) || asset) {
           node.url = `${base.replace(/\/$/, '')}${node.url}`;

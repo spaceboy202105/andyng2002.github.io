@@ -1,0 +1,11 @@
+---
+interface Props { icon: 'camera' | 'music' | 'badminton' | 'dumbbell' | 'film' }
+const paths = {
+  camera: 'M3 7h4l2-3h6l2 3h4v13H3Z M16 13a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+  music: 'M9 18V5l11-2v13 M9 8l11-2 M9 18c0 2-5 4-5 1s5-4 5-1 M20 16c0 2-5 4-5 1s5-4 5-1',
+  badminton: 'M5 2l14 5-8 10-4-2Z M5 2l6 15 M12 4l-1 13 M7 15l-2 3a3 3 0 0 0 5 3l1-4',
+  dumbbell: 'M7 12h10 M3 9v6 M7 6v12 M17 6v12 M21 9v6 M3 12h4 M17 12h4',
+  film: 'M3 3h18v18H3Z M7 3v18 M17 3v18 M3 8h4 M3 16h4 M17 8h4 M17 16h4 M7 12h10',
+};
+---
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d={paths[Astro.props.icon]}/></svg>
