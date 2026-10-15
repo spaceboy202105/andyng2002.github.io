@@ -8,9 +8,11 @@ const { locale, entries } = Astro.props;
 const versions = await getBlogEntries();
 const stories = selectStories({ entries: versions, locale });
 ---
-<div class="project-grid">
-  {entries.map(({ id, data }) => <article class="project" id={id}>
-    {data.cover && data.coverAlt && <Image src={data.cover} alt={data.coverAlt[locale]} width={900} class="project-cover"/>}
+<div class="project-list">
+  {entries.map(({ id, data }) => <article class="project publication" id={id}>
+    {data.cover && data.coverAlt && <Image src={data.cover} alt={data.coverAlt[locale]} width={600} class="project-cover publication-cover"/>}
+    {!data.cover && <div class="project-cover-blank publication-cover" aria-hidden="true"/>}
+    <div>
     {data.date && <p class="entry-meta"><time datetime={data.date}>{data.date}</time></p>}
     <h2>{data.name[locale]}</h2>
     <p>{data.summary[locale]}</p>
@@ -19,6 +21,7 @@ const stories = selectStories({ entries: versions, locale });
       {data.codeUrl && <a href={data.codeUrl}>{locale === 'en' ? 'Code' : '代码'}</a>}
       {data.demoUrl && <a href={data.demoUrl}>{locale === 'en' ? 'Demo' : '演示'}</a>}
       {stories.filter(story => versions.some(version => version.data.storyId === story.data.storyId && version.data.relatedProjects.includes(id))).map(story => <a href={pageHref({locale,target:{kind:'article',storyId:story.data.storyId}})} lang={story.data.lang}>{story.data.title}</a>)}
+    </div>
     </div>
   </article>)}
 </div>

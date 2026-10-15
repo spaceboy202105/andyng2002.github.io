@@ -1,0 +1,21 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { locales } from '../../../i18n';
+export async function getStaticPaths() {
+  const entries = await getCollection('films');
+  return locales.flatMap(locale => entries.map(article => ({ params: { lang: locale, id: article.id }, props: { locale, article } })));
+}
+const { locale, article } = Astro.props;
+const { Content } = await render(article);
+---
+<SiteLayout locale={locale} title={article.data.title} target={{kind:'filmReview',id:article.id}}>
+  <article class="research-article" lang={article.data.lang}>
+    <header class="article-header">
+      <p class="entry-meta"><time datetime={article.data.publishedAt}>{article.data.publishedAt}</time></p>
+      <h1>{article.data.title}</h1>
+      <p class="article-languages" lang={locale}>{locale === 'en' ? 'Review language: ' : '评论正文语言：'}{article.data.lang === 'en' ? 'English' : '中文'}</p>
+    </header>
+    <div class="article-grid"><div class="article-body"><Content/></div></div>
+  </article>
+</SiteLayout>
