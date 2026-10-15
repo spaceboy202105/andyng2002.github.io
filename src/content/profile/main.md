@@ -78,6 +78,11 @@ internships:
     period:
       en: Oct 2026 - Present
       zh: 2026.10 - 至今
+hobbies:
+  - {en: Photography, zh: 摄影}
+  - {en: Music, zh: 音乐}
+  - {en: Badminton, zh: 羽毛球}
+  - {en: Fitness, zh: 健身}
 contacts:
   - label: Email
     href: mailto:andyng@mail.ustc.edu.cn

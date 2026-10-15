@@ -44,3 +44,5 @@ h1{font:400 64px/1.1 Georgia,"Songti SC",serif;letter-spacing:-2px;margin:0 0 27
 
 .experience-section{padding:14px 0 20px}.experience-section .section-header{margin-bottom:14px}
 .experience-list{list-style:none;padding:0;margin:0}.experience-list li{border-top:1px solid var(--line);padding:14px 0}.experience-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px 24px;flex-wrap:wrap}.experience-heading h3{font:400 23px/1.4 Georgia,"Songti SC",serif;margin:0}.experience-list p{font-size:14px;line-height:1.75;color:var(--muted);margin:4px 0;overflow-wrap:anywhere}.experience-heading p{font-size:12px}.experience-list a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+
+.hobbies-list{display:flex;flex-wrap:wrap;gap:10px 32px;margin:0;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.75}

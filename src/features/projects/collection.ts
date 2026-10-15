@@ -11,10 +11,13 @@ export const projects = defineCollection({
     name: localizedText,
     summary: localizedText,
     role: localizedText,
-    cover: z.preprocess(localImagePath, image()),
-    coverAlt: localizedText,
+    cover: z.preprocess(localImagePath, image()).optional(),
+    coverAlt: localizedText.optional(),
     date: calendarDate.optional(),
     codeUrl: externalUrl.optional(),
     demoUrl: externalUrl.optional(),
+  }).refine(data => Boolean(data.cover) === Boolean(data.coverAlt), {
+    message: 'Project cover and coverAlt must be provided together',
+    path: ['coverAlt'],
   }),
 });

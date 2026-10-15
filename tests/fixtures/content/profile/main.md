@@ -25,6 +25,8 @@ internships:
     location: {en: Example City, zh: 示例城市}
     role: {en: Example Researcher, zh: 示例研究员}
     period: {en: "2026 - Present", zh: "2026 - 至今"}
+hobbies:
+  - {en: Example hobby, zh: 示例爱好}
 contacts:
   - label: Email
     href: mailto:researcher@example.org
