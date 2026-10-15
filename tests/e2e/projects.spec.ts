@@ -6,9 +6,13 @@ for (const width of [1280, 360]) test(`projects show only owner-selected work at
   await expect(page.getByRole('heading', { name: '已选项目', exact: true })).toBeVisible();
   await expect(page.getByRole('img', { name: '已选项目截图', exact: true })).toBeVisible();
   await expect(page.getByText('设计并实现工具', { exact: true })).toBeVisible();
+  await expect(page.locator('#ordinary img')).toHaveCount(0);
+  await expect(page.locator('#ordinary')).toContainText('普通非精选项目');
   await expect(page.getByText('未选项目', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: /演示|Demo/ })).toHaveCount(0);
   await page.getByRole('link', { name: 'EN', exact: true }).click();
+  await expect(page.locator('#ordinary')).toContainText('Ordinary Project');
+  await expect(page.locator('#ordinary img')).toHaveCount(0);
   await expect(page).toHaveURL(/\/en\/projects\/$/);
   await expect(page.getByRole('heading', { name: 'Selected Project', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Code', exact: true })).toHaveAttribute('href', 'https://example.org/code');

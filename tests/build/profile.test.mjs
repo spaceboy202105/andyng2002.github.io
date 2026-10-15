@@ -90,6 +90,7 @@ test('revoking profile approval removes the previously published image on a cach
 });
 
 for (const [field, before, after] of [
+  ['hobbies', 'en: Example hobby, zh: 示例爱好', 'en: Example hobby'],
   ['education', 'degree: {en: Example degree, zh: 示例学位}', 'degree: {en: Example degree}'],
   ['internships', 'role: {en: Example Researcher, zh: 示例研究员}', 'role: {en: Example Researcher}'],
   ['companyHref', 'https://example.org/company', 'javascript:alert(1)'],
@@ -106,14 +107,14 @@ for (const [field, before, after] of [
   });
 }
 
-test('omitted education and internships do not create empty homepage sections', async () => {
+test('omitted education, internships and hobbies do not create empty homepage sections', async () => {
   await withSite(async ({ directory, build }) => {
     const file = path.join(directory, 'content/profile/main.md');
     await writeFile(file, (await readFile(file, 'utf8')).replace(/education:[\s\S]*?(?=contacts:)/, ''));
     const result = build();
     assert.equal(result.status, 0, log(result));
     const html = await readFile(path.join(directory, 'dist/en/index.html'), 'utf8');
-    assert.doesNotMatch(html, /id="(?:education|internships)"/);
+    assert.doesNotMatch(html, /id="(?:education|internships|hobbies)"/);
   });
 });
 

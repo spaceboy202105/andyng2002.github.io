@@ -51,3 +51,10 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
     </li>)}
   </ul>
 </section>}
+
+{profile.data.hobbies.length > 0 && <section class="home-section experience-section" id="hobbies" aria-labelledby="hobbies-title">
+  <header class="section-header"><h2 id="hobbies-title">{locale === 'en' ? 'Hobbies' : '日常爱好'}</h2></header>
+  <ul class="hobbies-list">
+    {profile.data.hobbies.map(hobby => <li>{hobby[locale]}</li>)}
+  </ul>
+</section>}

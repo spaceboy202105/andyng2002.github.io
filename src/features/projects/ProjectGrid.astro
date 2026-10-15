@@ -10,7 +10,7 @@ const stories = selectStories({ entries: versions, locale });
 ---
 <div class="project-grid">
   {entries.map(({ id, data }) => <article class="project" id={id}>
-    <Image src={data.cover} alt={data.coverAlt[locale]} width={900} class="project-cover"/>
+    {data.cover && data.coverAlt && <Image src={data.cover} alt={data.coverAlt[locale]} width={900} class="project-cover"/>}
     {data.date && <p class="entry-meta"><time datetime={data.date}>{data.date}</time></p>}
     <h2>{data.name[locale]}</h2>
     <p>{data.summary[locale]}</p>

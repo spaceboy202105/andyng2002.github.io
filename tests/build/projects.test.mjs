@@ -31,3 +31,13 @@ test('new approved project appears before undated work', async () => {
     assert.doesNotMatch(html, /Unselected Project/);
   });
 });
+
+for (const field of ['cover', 'coverAlt']) test(`project rejects an unpaired ${field}`, async () => {
+  await withSite(async ({ directory, build }) => {
+    const file = path.join(directory, 'content/projects/selected.md');
+    await writeFile(file, (await readFile(file, 'utf8')).replace(new RegExp(`^${field}:.*\\n`, 'm'), ''));
+    const result = build();
+    assert.notEqual(result.status, 0, log(result));
+    assert.match(log(result), /coverAlt/);
+  });
+});
