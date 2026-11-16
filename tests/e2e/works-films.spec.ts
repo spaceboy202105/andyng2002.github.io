@@ -6,8 +6,8 @@ for (const width of [1280, 900, 768, 700, 680, 360, 320]) test(`new navigation a
     await page.goto(`/${locale}/`);
     await expect(page.locator('#hobbies svg[aria-hidden="true"]')).toHaveCount(1);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    if (width <= 800) await page.locator('.mobile-nav summary').click();
-    const nav = page.locator(width <= 800 ? '.mobile-nav nav' : '.desktop-nav');
+    if (width <= 800) await page.getByRole('button', { name: locale === 'en' ? 'Menu' : '菜单', exact: true }).click();
+    const nav = page.getByRole('navigation');
     await expect(nav.getByRole('link', { name: locale === 'en' ? 'Works' : '作品展示', exact: true })).toBeVisible();
     await expect(nav.getByRole('link', { name: locale === 'en' ? 'Films' : '电影评论', exact: true })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -40,4 +40,26 @@ test('gallery and film reviews retain language and approved content', async ({ p
   await page.locator('.language-link').click();
   await expect(page).toHaveURL(/\/zh\/films\/review\/$/);
   await expect(page.locator('.article-body')).toContainText('这是用于检查的合成电影评论');
+});
+
+for (const locale of ['en', 'zh']) test(`${locale} navigation works without JavaScript and identifies the current page`, async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 360, height: 800 } });
+  const page = await context.newPage();
+  await page.goto(`/${locale}/`);
+  await expect(page.getByRole('navigation')).toHaveCount(1);
+  const menu = page.getByRole('button', { name: locale === 'en' ? 'Menu' : '菜单', exact: true });
+  await menu.focus();
+  await page.keyboard.press('Enter');
+  const current = page.getByRole('navigation').locator('[aria-current="page"]');
+  await expect(current).toHaveCount(1);
+  await expect(current).toHaveAttribute('href', `/${locale}/`);
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeFocused();
+  await expect(current).toBeHidden();
+  await menu.click();
+  await page.getByRole('navigation').getByRole('link', { name: locale === 'en' ? 'Works' : '作品展示', exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/${locale}/works/$`));
+  await menu.click();
+  await expect(current).toHaveAttribute('href', `/${locale}/works/`);
+  await context.close();
 });
