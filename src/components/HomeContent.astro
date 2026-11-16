@@ -20,19 +20,21 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
 <ProfileIntro locale={locale} profile={profile}/>
 {(featuredPublications.length > 0 || profile.data.thesis) && <section class="home-section" id="research" aria-labelledby="research-title">
   <header class="section-header"><h2 id="research-title">{locale === 'en' ? 'Research' : '学术成果'}</h2><a href={pageHref({locale,target:{kind:'publications'}})}>{locale === 'en' ? 'All research' : '全部学术成果'} ↗</a></header>
-  <PublicationList locale={locale} entries={featuredPublications}/>
-  <ThesisEntry locale={locale} profile={profile}/>
+  <div>
+    <PublicationList locale={locale} entries={featuredPublications} home/>
+    <ThesisEntry locale={locale} profile={profile} home/>
+  </div>
 </section>}
 {featuredProjects.length > 0 && <section class="home-section" id="projects" aria-labelledby="projects-title">
   <header class="section-header"><h2 id="projects-title">{locale === 'en' ? 'Selected projects' : '代表项目'}</h2><a href={pageHref({locale,target:{kind:'projects'}})}>{locale === 'en' ? 'All projects' : '全部个人项目'} ↗</a></header>
-  <ProjectGrid locale={locale} entries={featuredProjects}/>
+  <ProjectGrid locale={locale} entries={featuredProjects} home/>
 </section>}
 {latest.length > 0 && <section class="home-section" id="blog" aria-labelledby="blog-title">
   <header class="section-header"><h2 id="blog-title">{locale === 'en' ? 'Latest writing' : '最新文章'}</h2><a href={pageHref({locale,target:{kind:'blog'}})}>{locale === 'en' ? 'All articles' : '全部文章'} ↗</a></header>
   <BlogList locale={locale} entries={latest}/>
 </section>}
 
-{profile.data.education.length > 0 && <section class="home-section experience-section" id="education" aria-labelledby="education-title">
+{profile.data.education.length > 0 && <section class="home-section" id="education" aria-labelledby="education-title">
   <header class="section-header"><h2 id="education-title">{locale === 'en' ? 'Education' : '教育经历'}</h2></header>
   <ul class="experience-list">
     {profile.data.education.map(entry => <li>
@@ -43,7 +45,7 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
     </li>)}
   </ul>
 </section>}
-{profile.data.internships.length > 0 && <section class="home-section experience-section" id="internships" aria-labelledby="internships-title">
+{profile.data.internships.length > 0 && <section class="home-section" id="internships" aria-labelledby="internships-title">
   <header class="section-header"><h2 id="internships-title">{locale === 'en' ? 'Internships' : '实习经历'}</h2></header>
   <ul class="experience-list">
     {profile.data.internships.map(entry => <li>
@@ -53,7 +55,7 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
   </ul>
 </section>}
 
-{profile.data.hobbies.length > 0 && <section class="home-section experience-section" id="hobbies" aria-labelledby="hobbies-title">
+{profile.data.hobbies.length > 0 && <section class="home-section" id="hobbies" aria-labelledby="hobbies-title">
   <header class="section-header"><h2 id="hobbies-title">{locale === 'en' ? 'Hobbies' : '日常爱好'}</h2></header>
   <ul class="hobbies-list">
     {profile.data.hobbies.map(hobby => <li><HobbyIcon icon={hobby.icon}/><span>{hobby[locale]}</span></li>)}

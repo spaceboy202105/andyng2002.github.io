@@ -41,10 +41,23 @@ for (const locale of ['en', 'zh']) test(`${locale} every paper has a loaded repr
         expect(await image.evaluate(el => el instanceof HTMLImageElement && el.complete && el.naturalWidth > 0)).toBe(true);
         const figure = (await image.boundingBox())!;
         const title = (await paper.getByRole('heading').boundingBox())!;
-        if (width > 680) expect(figure.x + figure.width).toBeLessThanOrEqual(title.x);
+        if (width > 680 && route.endsWith('/publications/')) expect(figure.x + figure.width).toBeLessThanOrEqual(title.x);
         else expect(figure.y + figure.height).toBeLessThanOrEqual(title.y);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    }
+  }
+});
+
+test('research figures keep a white backing in both color schemes', async ({ page }) => {
+  for (const colorScheme of ['light', 'dark'] as const) {
+    await page.emulateMedia({ colorScheme });
+    for (const route of ['/en/', '/en/publications/']) {
+      await page.goto(route);
+      await expect(page.locator('meta[name="color-scheme"]')).toHaveAttribute('content', 'light dark');
+      for (const image of await page.locator('.publication-cover').all()) {
+        expect(await image.evaluate(el => getComputedStyle(el).backgroundColor)).toBe('rgb(255, 255, 255)');
+      }
     }
   }
 });
