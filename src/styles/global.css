@@ -442,8 +442,6 @@ html[lang='zh'] h1 { letter-spacing: 0; line-height: 1.1; }
   .section-header { flex-direction: row; align-items: baseline; justify-content: space-between; flex-wrap: wrap; }
   .experience-list li { grid-template-columns: minmax(0, 1fr); }
   .experience-heading h3, .experience-heading p, .experience-list li > p { grid-column: 1; grid-row: auto; }
-  .experience-heading h3 { order: 1; }
-  .experience-heading p { order: 2; }
   .home-entry.project.has-cover { grid-template-columns: minmax(0, 1fr); }
   .home-entry.project.has-cover .publication-cover { max-width: 15rem; }
   .site-footer { align-items: flex-start; flex-direction: column; gap: 1rem; }
