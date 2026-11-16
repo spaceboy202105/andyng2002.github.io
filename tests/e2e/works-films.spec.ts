@@ -6,7 +6,8 @@ for (const width of [1280, 900, 768, 700, 680, 360, 320]) test(`new navigation a
     await page.goto(`/${locale}/`);
     await expect(page.locator('#hobbies svg[aria-hidden="true"]')).toHaveCount(1);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-    if (width <= 800) await page.getByRole('button', { name: locale === 'en' ? 'Menu' : '菜单', exact: true }).click();
+    const menu = page.getByRole('button', { name: locale === 'en' ? 'Menu' : '菜单', exact: true });
+    if (await menu.isVisible()) await menu.click();
     const nav = page.getByRole('navigation');
     await expect(nav.getByRole('link', { name: locale === 'en' ? 'Works' : '作品展示', exact: true })).toBeVisible();
     await expect(nav.getByRole('link', { name: locale === 'en' ? 'Films' : '电影评论', exact: true })).toBeVisible();
@@ -62,4 +63,37 @@ for (const locale of ['en', 'zh']) test(`${locale} navigation works without Java
   await menu.click();
   await expect(current).toHaveAttribute('href', `/${locale}/works/`);
   await context.close();
+});
+
+for (const locale of ['en', 'zh']) test(`${locale} open navigation returns inline when the header grows`, async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto(`/${locale}/`);
+  const menu = page.getByRole('button', { name: locale === 'en' ? 'Menu' : '菜单', exact: true });
+  const links = page.getByRole('navigation').getByRole('list', { includeHidden: true });
+  await menu.focus();
+  await page.keyboard.press('Enter');
+  await expect(links).toBeVisible();
+  await expect(links).toHaveAttribute('popover', 'auto');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(menu).toBeHidden();
+  await expect(links).not.toHaveAttribute('popover');
+  await expect(links).toBeVisible();
+  const header = (await page.locator('.site-header').boundingBox())!;
+  const inline = (await links.boundingBox())!;
+  expect(inline.x).toBeGreaterThanOrEqual(header.x);
+  expect(inline.x + inline.width).toBeLessThanOrEqual(header.x + header.width);
+  expect(inline.y).toBeGreaterThanOrEqual(header.y);
+  expect(inline.y + inline.height).toBeLessThanOrEqual(header.y + header.height);
+  await page.setViewportSize({ width: 375, height: 900 });
+  await expect(menu).toBeVisible();
+  await expect(links).toHaveAttribute('popover', 'auto');
+  await expect(links).toBeHidden();
+  await menu.focus();
+  await page.keyboard.press('Enter');
+  await expect(links).toBeVisible();
+  await page.keyboard.press('Tab');
+  await expect(links.getByRole('link').first()).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(links).toBeHidden();
+  await expect(menu).toBeFocused();
 });

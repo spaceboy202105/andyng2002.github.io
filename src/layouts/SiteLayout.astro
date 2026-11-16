@@ -49,5 +49,31 @@ const navigation = [
       </footer>
     </div>
     <script src="../scripts/language.ts"></script>
+    <script>
+      if (CSS.supports('selector(:popover-open)')) {
+        const header = document.querySelector<HTMLElement>('.site-header')!;
+        const list = header.querySelector<HTMLElement>('#primary-links')!;
+        let last = 0;
+        const sync = () => {
+          const width = header.clientWidth;
+          if (!header.classList.contains('is-wide') && width <= last) return;
+          last = width;
+          const open = list.matches(':popover-open');
+          list.removeAttribute('popover');
+          header.classList.add('is-measuring', 'is-wide');
+          const wide = header.scrollWidth <= header.clientWidth;
+          header.classList.remove('is-measuring');
+          header.classList.toggle('is-wide', wide);
+          if (!wide) {
+            list.setAttribute('popover', 'auto');
+            if (open) list.showPopover();
+          }
+        };
+        sync();
+        const observer = new ResizeObserver(sync);
+        observer.observe(header);
+        observer.observe(list);
+      }
+    </script>
   </body>
 </html>
