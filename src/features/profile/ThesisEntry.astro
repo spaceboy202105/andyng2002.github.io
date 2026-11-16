@@ -2,17 +2,21 @@
 import { Image } from 'astro:assets';
 import { assetHref, type Locale } from '../../i18n';
 import type { Profile } from './content';
-interface Props { locale: Locale; profile: Profile }
-const { locale, profile } = Astro.props;
+interface Props { locale: Locale; profile: Profile; home?: boolean }
+const { locale, profile, home = false } = Astro.props;
+const Heading = home ? 'h3' : 'h2';
 const thesis = profile.data.thesis;
 ---
-{thesis && <article class="publication" id="thesis">
-  <Image src={thesis.cover} alt={thesis.coverAlt[locale]} width={600} class="publication-cover"/>
+{thesis && <article class:list={['publication', { 'home-entry': home }]} id="thesis">
+  <Image src={thesis.cover} alt={thesis.coverAlt[locale]} width={home ? 1200 : 600} class="publication-cover"/>
   <div>
     <p class="entry-meta">{thesis.year} · <span>{locale === 'en' ? 'Undergraduate thesis' : '本科毕业论文 / Undergraduate thesis'}</span> · {thesis.institution[locale]}</p>
-    <h2>{thesis.title[locale]}</h2>
+    <Heading class="entry-title">{thesis.title[locale].split(/(\s+)/).map(part => /\S-\S/.test(part) ? <span class="no-break">{part}</span> : part)}</Heading>
     <p class="authors"><strong>{profile.data.name[locale]}</strong></p>
     <p>{thesis.summary[locale]}</p>
     <div class="entry-links"><a href={assetHref(thesis.pdfPath)}>{locale === 'en' ? 'Chinese PDF' : '中文 PDF'}</a></div>
   </div>
 </article>}
+<style>
+  .no-break { white-space: nowrap; }
+</style>

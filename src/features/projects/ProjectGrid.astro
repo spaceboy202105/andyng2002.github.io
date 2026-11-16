@@ -3,18 +3,21 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { pageHref, type Locale } from '../../i18n';
 import { getBlogEntries, selectStories } from '../blog/content';
-interface Props { locale: Locale; entries: CollectionEntry<'projects'>[] }
-const { locale, entries } = Astro.props;
+interface Props { locale: Locale; entries: CollectionEntry<'projects'>[]; home?: boolean }
+const { locale, entries, home = false } = Astro.props;
+const Heading = home ? 'h3' : 'h2';
 const versions = await getBlogEntries();
 const stories = selectStories({ entries: versions, locale });
 ---
 <div class="project-list">
-  {entries.map(({ id, data }) => <article class="project publication" id={id}>
+  {entries.map(({ id, data }) => {
+    const hasCover = Boolean(data.cover && data.coverAlt);
+    return <article class:list={['project', 'publication', { 'home-entry': home, 'has-cover': home && hasCover }]} id={id}>
     {data.cover && data.coverAlt && <Image src={data.cover} alt={data.coverAlt[locale]} width={600} class="project-cover publication-cover"/>}
-    {!data.cover && <div class="project-cover-blank publication-cover" aria-hidden="true"/>}
+    {!data.cover && !home && <div class="project-cover-blank publication-cover" aria-hidden="true"/>}
     <div>
     {data.date && <p class="entry-meta"><time datetime={data.date}>{data.date}</time></p>}
-    <h2>{data.name[locale]}</h2>
+    <Heading class="entry-title">{data.name[locale]}</Heading>
     <p>{data.summary[locale]}</p>
     <p><strong>{locale === 'en' ? 'My role' : '个人职责'}</strong> · <span>{data.role[locale]}</span></p>
     <div class="entry-links">
@@ -23,5 +26,6 @@ const stories = selectStories({ entries: versions, locale });
       {stories.filter(story => versions.some(version => version.data.storyId === story.data.storyId && version.data.relatedProjects.includes(id))).map(story => <a href={pageHref({locale,target:{kind:'article',storyId:story.data.storyId}})} lang={story.data.lang}>{story.data.title}</a>)}
     </div>
     </div>
-  </article>)}
+  </article>;
+  })}
 </div>

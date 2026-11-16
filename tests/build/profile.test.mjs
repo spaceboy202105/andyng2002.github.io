@@ -147,8 +147,8 @@ for (const base of ['/', '/preview/']) {
           assert.ok(html.includes(`href="${base}papers/undergraduate-thesis.pdf"`), html);
           assert.ok(html.includes(label), html);
           assert.match(html, /Undergraduate thesis/);
-          assert.match(html, /<p class="authors"><strong>(?:Test Researcher|测试研究者)<\/strong><\/p>/);
-          assert.match(html, /<article class="publication" id="thesis">[\s\S]*?<img[^>]+alt="(?:Synthetic thesis figure|合成毕业论文图)"/);
+          assert.match(html, /<p class="authors"[^>]*><strong[^>]*>(?:Test Researcher|测试研究者)<\/strong><\/p>/);
+          assert.match(html, /<article class="publication(?: home-entry)?" id="thesis"[^>]*>[\s\S]*?<img[^>]+alt="(?:Synthetic thesis figure|合成毕业论文图)"/);
           assert.doesNotMatch(html, /<section[^>]+id="thesis"/);
           if (!route) {
             assert.match(html, /<section[^>]+id="research"[^>]*>(?:(?!<\/section>)[\s\S])*id="thesis"/);
