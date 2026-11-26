@@ -23,9 +23,10 @@ const statuses = {
       <p class="authors">{data.authors.map((author, index) => {
         const name = typeof author === 'string' ? author : author.name;
         const label = typeof author === 'string' ? author : <a href={author.url}>{author.name}</a>;
-        return <>{index > 0 && ', '}{ownNames.includes(name) ? <strong>{label}</strong> : label}{data.equalContributionAuthors?.includes(name) && <sup>*</sup>}</>;
+        return <>{index > 0 && ', '}{ownNames.includes(name) ? <strong>{label}</strong> : label}{data.equalContributionAuthors?.includes(name) && <sup>*</sup>}{data.correspondingAuthor === name && <sup>†</sup>}</>;
       })}</p>
       {data.equalContributionAuthors && <p class="entry-meta">{locale === 'en' ? '* Equal contribution' : '* 共同第一作者'}</p>}
+      {data.correspondingAuthor && <p class="entry-meta">{locale === 'en' ? '† Corresponding author' : '† 通讯作者'}</p>}
       <p>{data.summary[locale]}</p>
       <div class="entry-links">
         {data.projectPath && <a href={assetHref(data.projectPath)}>{locale === 'en' ? 'Project page' : '论文项目页'}</a>}
