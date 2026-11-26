@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import { pageHref, type Locale } from '../../i18n';
+import { assetHref, pageHref, type Locale } from '../../i18n';
 import { getProfile } from '../profile/content';
 import { getBlogEntries, selectStories } from '../blog/content';
 interface Props { locale: Locale; entries: CollectionEntry<'publications'>[] }
@@ -23,10 +23,12 @@ const statuses = {
       <p class="authors">{data.authors.map((author, index) => {
         const name = typeof author === 'string' ? author : author.name;
         const label = typeof author === 'string' ? author : <a href={author.url}>{author.name}</a>;
-        return <>{index > 0 && ', '}{ownNames.includes(name) ? <strong>{label}</strong> : label}</>;
+        return <>{index > 0 && ', '}{ownNames.includes(name) ? <strong>{label}</strong> : label}{data.equalContributionAuthors?.includes(name) && <sup>*</sup>}</>;
       })}</p>
+      {data.equalContributionAuthors && <p class="entry-meta">{locale === 'en' ? '* Equal contribution' : '* 共同第一作者'}</p>}
       <p>{data.summary[locale]}</p>
       <div class="entry-links">
+        {data.projectPath && <a href={assetHref(data.projectPath)}>{locale === 'en' ? 'Project page' : '论文项目页'}</a>}
         {data.paperUrl && <a href={data.paperUrl}>{new URL(data.paperUrl).hostname === 'arxiv.org' ? 'arXiv' : locale === 'en' ? 'Paper' : '论文'}</a>}
         {data.codeUrl && <a href={data.codeUrl}>{locale === 'en' ? 'Code' : '代码'}</a>}
         {stories.filter(story => versions.some(version => version.data.storyId === story.data.storyId && version.data.relatedPublications.includes(id))).map(story => <a href={pageHref({locale,target:{kind:'article',storyId:story.data.storyId}})} lang={story.data.lang}>{story.data.title}</a>)}

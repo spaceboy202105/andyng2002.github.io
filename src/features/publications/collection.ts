@@ -18,8 +18,17 @@ export const publications = defineCollection({
     summary: localizedText,
     venue: z.string().trim().min(1).optional(),
     paperUrl: externalUrl.optional(),
+    projectPath: z.string().regex(/^\/[a-z0-9-]+(?:\/[a-z0-9-]+)*\/$/).optional(),
+    equalContributionAuthors: z.array(z.string().trim().min(1)).min(2).optional(),
     codeUrl: externalUrl.optional(),
     cover: z.preprocess(localImagePath, image()),
     coverAlt: localizedText,
+  }).superRefine((publication, ctx) => {
+    const equal = publication.equalContributionAuthors;
+    if (!equal) return;
+    const names = publication.authors.map(author => typeof author === 'string' ? author : author.name);
+    if (new Set(equal).size !== equal.length || equal.some(name => !names.includes(name))) {
+      ctx.addIssue({ code: 'custom', path: ['equalContributionAuthors'], message: 'Equal contributors must be distinct listed authors.' });
+    }
   }),
 });
