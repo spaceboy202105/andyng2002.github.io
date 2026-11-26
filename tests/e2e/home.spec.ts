@@ -84,7 +84,7 @@ test('long unbroken biography stays within a narrow viewport', async ({ page }, 
 
 for (const locale of ['en', 'zh']) {
   test(`education and internships render in ${locale} on desktop and mobile`, async ({ page }) => {
-    for (const width of [1280, 320]) {
+    for (const width of [1280, 375, 320]) {
       await page.setViewportSize({ width, height: 800 });
       await page.goto(`/${locale}/`);
       const education = page.locator('#education');
@@ -96,6 +96,18 @@ for (const locale of ['en', 'zh']) {
       await expect(internships.getByRole('link', { name: locale === 'en' ? 'Example Company' : '示例公司' })).toHaveAttribute('href', locale === 'en' ? 'https://example.org/company' : 'https://example.org/zh/company');
       await expect(internships).toContainText(locale === 'en' ? 'Example Researcher' : '示例研究员');
       await expect(internships).toContainText(locale === 'en' ? '2026 - Present' : '2026 - 至今');
+      for (const entry of await page.locator('#education .experience-list li, #internships .experience-list li').all()) {
+        const title = (await entry.getByRole('heading').boundingBox())!;
+        const date = (await entry.locator('.experience-heading p').boundingBox())!;
+        const details = (await entry.locator(':scope > p').first().boundingBox())!;
+        if (width <= 800) {
+          expect(title.y + title.height).toBeLessThanOrEqual(date.y);
+          expect(date.y + date.height).toBeLessThanOrEqual(details.y);
+        } else {
+          expect(date.x + date.width).toBeLessThanOrEqual(title.x);
+          expect(title.y + title.height).toBeLessThanOrEqual(details.y);
+        }
+      }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }
   });

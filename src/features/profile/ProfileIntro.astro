@@ -5,12 +5,14 @@ import type { Locale } from '../../i18n';
 import type { Profile } from './content';
 interface Props { locale: Locale; profile: Profile }
 const { locale, profile: { data } } = Astro.props;
+const subtitle = locale === 'en' ? 'AI for CAD & computational geometry' : '面向 CAD 与计算几何的 AI';
 ---
 <section id="profile" class="profile-intro" aria-labelledby="profile-name">
   <div class="profile-copy">
-    <h1 id="profile-name">{data.name[locale]}<span aria-hidden="true">.</span></h1>
+    <h1 id="profile-name">{data.name[locale]}</h1>
+    <p class="profile-subtitle">{subtitle}</p>
     <p class="profile-bio">{data.bio[locale]}</p>
-    <ContactLinks locale={locale} contacts={data.contacts}/>
+    <ContactLinks locale={locale} contacts={data.contacts} text/>
   </div>
-  <Image class="profile-photo" src={data.portrait} alt={data.portraitAlt[locale]} widths={[480, 800, 1120]} sizes="(max-width: 680px) calc(100vw - 44px), (max-width: 900px) 40vw, 436px" width={800} format="webp" loading="eager" fetchpriority="high"/>
+  <Image class="profile-photo" src={data.portrait} alt={data.portraitAlt[locale]} widths={[480, 800, 1120]} sizes="(max-width: 800px) calc(100vw - 44px), 352px" width={800} format="webp" loading="eager" fetchpriority="high"/>
 </section>

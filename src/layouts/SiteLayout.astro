@@ -9,7 +9,16 @@ const { data: profile } = await getProfile();
 const text = ui[locale];
 const otherLocale = locale === 'en' ? 'zh' : 'en';
 const home = pageHref({ locale, target: { kind: 'home' } });
-const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale, target: { kind: 'publications' } }), label: locale === 'en' ? 'Research' : '学术成果' }, { href: pageHref({ locale, target: { kind: 'projects' } }), label: locale === 'en' ? 'Projects' : '个人项目' }, { href: pageHref({ locale, target: { kind: 'blog' } }), label: 'Blog' }, { href: pageHref({ locale, target: { kind: 'works' } }), label: locale === 'en' ? 'Works' : '作品展示' }, { href: pageHref({ locale, target: { kind: 'films' } }), label: locale === 'en' ? 'Films' : '电影评论' }, { href: `${home}#contact`, label: text.contact }];
+const section = target.kind === 'article' ? 'blog' : target.kind === 'filmReview' ? 'films' : target.kind;
+const navigation = [
+  { key: 'home', href: home, label: text.home },
+  { key: 'publications', href: pageHref({ locale, target: { kind: 'publications' } }), label: locale === 'en' ? 'Research' : '学术成果' },
+  { key: 'projects', href: pageHref({ locale, target: { kind: 'projects' } }), label: locale === 'en' ? 'Projects' : '个人项目' },
+  { key: 'blog', href: pageHref({ locale, target: { kind: 'blog' } }), label: 'Blog' },
+  { key: 'works', href: pageHref({ locale, target: { kind: 'works' } }), label: locale === 'en' ? 'Works' : '作品展示' },
+  { key: 'films', href: pageHref({ locale, target: { kind: 'films' } }), label: locale === 'en' ? 'Films' : '电影评论' },
+  { key: 'contact', href: `${home}#contact`, label: text.contact },
+];
 ---
 <!doctype html>
 <html lang={locale} data-default-entry={Astro.url.pathname === assetHref('') ? '' : undefined} data-en-home={pageHref({locale:'en',target:{kind:'home'}})}>
@@ -17,7 +26,7 @@ const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale,
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content={profile.bio[locale]}/>
-    <meta name="color-scheme" content="light"/>
+    <meta name="color-scheme" content="light dark"/>
     <title>{title} · {profile.brand}</title>
   </head>
   <body>
@@ -25,11 +34,12 @@ const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale,
     <div class="site-shell" id="top">
       <header class="site-header">
         <a class="brand" href={home} aria-label={`${profile.brand} ${text.home}`}>{profile.brand}</a>
-        <nav class="desktop-nav" aria-label={text.navigation}>{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav>
-        <details class="mobile-nav">
-          <summary>{text.menu}</summary>
-          <nav aria-label={text.navigation}>{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav>
-        </details>
+        <nav class="site-nav" aria-label={text.navigation}>
+          <button class="menu-button" type="button" popovertarget="primary-links">{text.menu}</button>
+          <ul id="primary-links" popover="auto">
+            {navigation.map(item => <li><a href={item.href} aria-current={item.key === section ? 'page' : undefined}>{item.label}</a></li>)}
+          </ul>
+        </nav>
         <a class="language-link" href={pageHref({ locale: otherLocale, target })} lang={otherLocale} hreflang={otherLocale}>{locale === 'en' ? '中文' : 'EN'}</a>
       </header>
       <main id="main-content"><slot/></main>
@@ -39,5 +49,31 @@ const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale,
       </footer>
     </div>
     <script src="../scripts/language.ts"></script>
+    <script>
+      if (CSS.supports('selector(:popover-open)')) {
+        const header = document.querySelector<HTMLElement>('.site-header')!;
+        const list = header.querySelector<HTMLElement>('#primary-links')!;
+        let last = 0;
+        const sync = () => {
+          const width = header.clientWidth;
+          if (!header.classList.contains('is-wide') && width <= last) return;
+          last = width;
+          const open = list.matches(':popover-open');
+          list.removeAttribute('popover');
+          header.classList.add('is-measuring', 'is-wide');
+          const wide = header.scrollWidth <= header.clientWidth;
+          header.classList.remove('is-measuring');
+          header.classList.toggle('is-wide', wide);
+          if (!wide) {
+            list.setAttribute('popover', 'auto');
+            if (open) list.showPopover();
+          }
+        };
+        sync();
+        const observer = new ResizeObserver(sync);
+        observer.observe(header);
+        observer.observe(list);
+      }
+    </script>
   </body>
 </html>
