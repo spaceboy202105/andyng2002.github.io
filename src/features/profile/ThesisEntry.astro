@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { assetHref, type Locale } from '../../i18n';
+import { assetHref, pageHref, type Locale } from '../../i18n';
 import type { Profile } from './content';
 interface Props { locale: Locale; profile: Profile }
 const { locale, profile } = Astro.props;
@@ -11,8 +11,12 @@ const thesis = profile.data.thesis;
   <div>
     <p class="entry-meta">{thesis.year} · <span>{locale === 'en' ? 'Undergraduate thesis' : '本科毕业论文 / Undergraduate thesis'}</span> · {thesis.institution[locale]}</p>
     <h2>{thesis.title[locale]}</h2>
-    <p class="authors"><strong>{profile.data.name[locale]}</strong></p>
+    <p class="authors"><strong><a href={pageHref({ locale, target: { kind: 'home' } }) + '#profile'}>{profile.data.name[locale]}</a></strong></p>
     <p>{thesis.summary[locale]}</p>
     <div class="entry-links"><a href={assetHref(thesis.pdfPath)}>{locale === 'en' ? 'Chinese PDF' : '中文 PDF'}</a></div>
   </div>
 </article>}
+
+<style>
+  .authors a { text-decoration: underline; text-underline-offset: 3px; }
+</style>

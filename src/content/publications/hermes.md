@@ -3,15 +3,24 @@ approved: true
 featured: true
 title: Accurate, Secure, and Efficient Semi-Constrained Navigation Over Encrypted City Maps
 authors:
-  - Meng Li
-  - Yifei Chen
-  - Jianbo Gao
-  - Jingyu Wu
-  - Zijian Zhang
-  - Jialing He
-  - Liehuang Zhu
-  - Mauro Conti
-  - Xiaodong Lin
+  - name: Meng Li
+    url: https://faculty.hfut.edu.cn/limeng/zh_CN/
+  - name: Yifei Chen
+    url: https://orcid.org/0000-0002-5256-3249
+  - name: Jianbo Gao
+    url: https://orcid.org/0000-0002-5391-8152
+  - name: Jingyu Wu
+    url: https://spaceboy202105.github.io/andyng2002.github.io/
+  - name: Zijian Zhang
+    url: https://cst.bit.edu.cn/szdw/jsml/bssds/cea4904e7e274a07a460f93c917a0216.htm
+  - name: Jialing He
+    url: https://faculty.cqu.edu.cn/JialingHe/en/index.htm
+  - name: Liehuang Zhu
+    url: https://cst.bit.edu.cn/szdw/jsml/bssds/2515180f56bf4a30b0bb672dfab8391d.htm
+  - name: Mauro Conti
+    url: https://www.math.unipd.it/~conti/
+  - name: Xiaodong Lin
+    url: https://socs.uoguelph.ca/~xlin08/
 year: 2025
 status: published
 venue: IEEE Transactions on Dependable and Secure Computing, 22(3), 2642–2658

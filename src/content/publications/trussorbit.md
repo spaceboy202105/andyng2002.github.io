@@ -3,11 +3,16 @@ approved: true
 featured: true
 title: "TrussOrbit: Edge-Orbit Sequence Modeling for Truss Metamaterial Inverse Design"
 authors:
-  - Jingyu Wu
-  - Qibiao Li
-  - Tengyu Luo
-  - Youcheng Cai
-  - Ligang Liu
+  - name: Jingyu Wu
+    url: https://spaceboy202105.github.io/andyng2002.github.io/
+  - name: Qibiao Li
+    url: https://openalex.org/authors/A5123128269
+  - name: Tengyu Luo
+    url: https://openalex.org/authors/A5144722982
+  - name: Youcheng Cai
+    url: https://youchengcai.github.io/
+  - name: Ligang Liu
+    url: https://faculty.ustc.edu.cn/liuligang/en/index.htm
 equalContributionAuthors:
   - Jingyu Wu
   - Qibiao Li
