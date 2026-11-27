@@ -3,13 +3,20 @@ import { z } from 'astro/zod';
 import { approval, approvedMarkdownLoader } from '../content/approved-markdown';
 import { localizedText, localImagePath, externalUrl } from '../content/fields';
 
+const bioText = z.string().trim().min(1).transform(text => [text]).or(
+  z.array(z.union([
+    z.string().min(1),
+    z.object({ text: z.string().trim().min(1), href: externalUrl }),
+  ])).min(1),
+);
+
 export const profile = defineCollection({
   loader: approvedMarkdownLoader({ name: 'profile' }),
   schema: ({ image }) => z.object({
     approved: approval,
     brand: z.string().trim().min(1),
     name: localizedText,
-    bio: localizedText,
+    bio: z.object({ en: bioText, zh: bioText }),
     portrait: z.preprocess(localImagePath, image()),
     portraitAlt: localizedText,
     thesis: z.object({
@@ -24,6 +31,7 @@ export const profile = defineCollection({
     education: z.array(z.object({
       institution: localizedText,
       school: localizedText,
+      schoolHref: z.object({ en: externalUrl, zh: externalUrl }).optional(),
       degree: localizedText,
       period: localizedText,
       advisor: z.object({ name: localizedText, href: externalUrl }),

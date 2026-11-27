@@ -16,7 +16,7 @@ const navigation = [{ href: home, label: text.home }, { href: pageHref({ locale,
   <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content={profile.bio[locale]}/>
+    <meta name="description" content={profile.bio[locale].map(part => typeof part === 'string' ? part : part.text).join('')}/>
     <meta name="color-scheme" content="light"/>
     <title>{title} · {profile.brand}</title>
   </head>

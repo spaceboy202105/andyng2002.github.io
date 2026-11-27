@@ -11,6 +11,7 @@ authors:
     url: https://openalex.org/authors/A5144722982
   - name: Ligang Liu
     url: https://faculty.ustc.edu.cn/liuligang/en/index.htm
+correspondingAuthor: Youcheng Cai
 year: 2026
 status: preprint
 summary:

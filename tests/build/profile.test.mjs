@@ -24,6 +24,41 @@ test('profile requires both biography languages', async () => {
   });
 });
 
+test('profile renders localized biography and school links with a plain-text description', async () => {
+  await withSite(async ({ directory, build }) => {
+    const file = path.join(directory, 'content/profile/main.md');
+    const source = (await readFile(file, 'utf8'))
+      .replace(/bio:\n[\s\S]*?(?=portrait:)/, `bio:
+  en:
+    - "Studied at "
+    - {text: Example School, href: https://example.org/en/school}
+    - "."
+  zh:
+    - 就读于
+    - {text: 示例学院, href: https://example.org/zh/school}
+    - 。
+`)
+      .replace('    degree:', '    schoolHref: {en: https://example.org/en/school, zh: https://example.org/zh/school}\n    degree:');
+    await writeFile(file, source);
+    const result = build();
+    assert.equal(result.status, 0, log(result));
+    for (const [locale, name, description] of [
+      ['en', 'Example School', 'Studied at Example School.'],
+      ['zh', '示例学院', '就读于示例学院。'],
+    ]) {
+      const html = await readFile(path.join(directory, `dist/${locale}/index.html`), 'utf8');
+      const link = new RegExp(`<a href="https://example.org/${locale}/school"[^>]*>${name}</a>`, 'g');
+      assert.equal((html.match(link) ?? []).length, 2);
+      assert.ok(html.includes(`<meta name="description" content="${description}">`));
+    }
+
+    await writeFile(file, source.replace('href: https://example.org/en/school', 'href: javascript:alert(1)'));
+    const rejected = build();
+    assert.notEqual(rejected.status, 0, log(rejected));
+    assert.match(log(rejected), /bio[\s\S]*URL must use https or http/);
+  });
+});
+
 test('exactly one approved profile is required', async () => {
   await withSite(async ({ directory, build }) => {
     const source = await readFile(path.join(directory, 'content/profile/main.md'), 'utf8');
