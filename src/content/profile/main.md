@@ -9,7 +9,7 @@ bio:
     - "I am a master’s student at the "
     - {text: University of Science and Technology of China, href: https://en.ustc.edu.cn/}
     - ", advised by Professor "
-    - {text: Ligang Liu, href: https://faculty.ustc.edu.cn/liuligang/en/index.htm}
+    - {text: Ligang Liu, href: http://staff.ustc.edu.cn/~lgliu/}
     - ". He works on geometric modeling and processing, geometric optimization for 3D printing, and machine learning for geometry processing. My research focuses on AI for computer-aided design and computational geometry, including 3D generation and autoregressive modeling. I am also interested in AI agents for engineering. During my undergraduate studies at the "
     - {text: School of Computer Science and Information Engineering, href: https://ci.hfut.edu.cn/English/Home.htm}
     - " at "
@@ -21,7 +21,7 @@ bio:
     - 我是
     - {text: 中国科学技术大学, href: https://www.ustc.edu.cn/}
     - 硕士研究生，师从
-    - {text: 刘利刚, href: https://faculty.ustc.edu.cn/liuligang/zh_CN/index.htm}
+    - {text: 刘利刚, href: http://staff.ustc.edu.cn/~lgliu/}
     - 教授。刘老师主要研究几何建模与处理、面向 3D 打印的几何优化，以及机器学习在几何处理中的应用。我的研究聚焦面向计算机辅助设计（CAD）和计算几何的 AI，包括三维生成和自回归建模，也关注工程智能体。本科就读于
     - {text: 合肥工业大学, href: https://www.hfut.edu.cn/}
     - 的

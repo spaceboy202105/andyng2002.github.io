@@ -10,7 +10,7 @@ authors:
   - name: Tengyu Luo
     url: https://openalex.org/authors/A5144722982
   - name: Ligang Liu
-    url: https://faculty.ustc.edu.cn/liuligang/en/index.htm
+    url: http://staff.ustc.edu.cn/~lgliu/
 correspondingAuthor: Youcheng Cai
 year: 2026
 status: preprint

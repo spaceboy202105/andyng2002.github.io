@@ -12,7 +12,7 @@ authors:
   - name: Youcheng Cai
     url: https://youchengcai.github.io/
   - name: Ligang Liu
-    url: https://faculty.ustc.edu.cn/liuligang/en/index.htm
+    url: http://staff.ustc.edu.cn/~lgliu/
 equalContributionAuthors:
   - Jingyu Wu
   - Qibiao Li
