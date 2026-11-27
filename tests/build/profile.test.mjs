@@ -140,15 +140,18 @@ for (const base of ['/', '/preview/']) {
       await writeFile(path.join(directory, 'public/papers/undergraduate-thesis.pdf'), '%PDF-1.4\n%%EOF\n');
       const result = build({ SITE_BASE_PATH: base });
       assert.equal(result.status, 0, log(result));
-      for (const [locale, title, label] of [['en', 'Synthetic undergraduate thesis', 'Chinese PDF'], ['zh', '合成本科毕业论文', '中文 PDF']]) {
+      for (const [locale, title, label, author] of [
+        ['en', 'Synthetic undergraduate thesis', 'Chinese PDF', 'Test Researcher'],
+        ['zh', '合成本科毕业论文', '中文 PDF', '测试研究者'],
+      ]) {
         for (const route of ['', 'publications/']) {
           const html = await readFile(path.join(directory, `dist/${locale}/${route}index.html`), 'utf8');
           assert.ok(html.includes(title), html);
           assert.ok(html.includes(`href="${base}papers/undergraduate-thesis.pdf"`), html);
           assert.ok(html.includes(label), html);
           assert.match(html, /Undergraduate thesis/);
-          assert.match(html, /<p class="authors"><strong>(?:Test Researcher|测试研究者)<\/strong><\/p>/);
-          assert.match(html, /<article class="publication" id="thesis">[\s\S]*?<img[^>]+alt="(?:Synthetic thesis figure|合成毕业论文图)"/);
+          assert.match(html, new RegExp(`<p class="authors"[^>]*><strong[^>]*><a href="${base}${locale}/#profile"[^>]*>${author}</a></strong></p>`));
+          assert.match(html, /<article class="publication" id="thesis"[^>]*>[\s\S]*?<img[^>]+alt="(?:Synthetic thesis figure|合成毕业论文图)"/);
           assert.doesNotMatch(html, /<section[^>]+id="thesis"/);
           if (!route) {
             assert.match(html, /<section[^>]+id="research"[^>]*>(?:(?!<\/section>)[\s\S])*id="thesis"/);
