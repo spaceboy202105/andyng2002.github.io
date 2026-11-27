@@ -1,14 +1,16 @@
 ---
 approved: true
-featured: false
+featured: true
 title: "Towards Valid B-Rep Generation: Training-Free Wireframe Anomaly Detection and Repair"
 authors:
-  - Jingyu Wu
+  - name: Jingyu Wu
+    url: https://spaceboy202105.github.io/andyng2002.github.io/
   - name: Youcheng Cai
     url: https://youchengcai.github.io/
-  - Tengyu Luo
+  - name: Tengyu Luo
+    url: https://openalex.org/authors/A5144722982
   - name: Ligang Liu
-    url: http://staff.ustc.edu.cn/~lgliu/
+    url: https://faculty.ustc.edu.cn/liuligang/en/index.htm
 year: 2026
 status: preprint
 summary:
