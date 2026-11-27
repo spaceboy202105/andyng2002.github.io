@@ -1,12 +1,21 @@
 \documentclass[11pt,a4paper]{article}
 \input{style.tex}
+\usepackage{graphicx}
 \hypersetup{pdftitle={吴靖宇 - 学术简历}}
 \begin{document}
+\noindent
+\begin{minipage}[t]{0.84\textwidth}
+\vspace{0pt}
 {\fontsize{25}{29}\selectfont\bfseries 吴靖宇}\hfill 学术简历\quad andy
 
 \href{mailto:andyng@mail.ustc.edu.cn}{andyng@mail.ustc.edu.cn}\quad
 \href{https://github.com/spaceboy202105}{GitHub}\quad
 \href{https://orcid.org/0009-0004-7685-2901}{ORCID: 0009-0004-7685-2901}
+\end{minipage}\hfill
+\begin{minipage}[t]{22mm}
+\vspace{0pt}
+\includegraphics[width=\linewidth]{portrait.jpg}
+\end{minipage}\par
 
 \section{教育经历}
 \textbf{中国科学技术大学}\quad 人工智能与数据科学学院\hfill 2024.09 - 2027.06（预计）
@@ -27,6 +36,8 @@ AI 研究员
 
 \section{研究与项目经历}
 \entry{Towards Valid B-Rep Generation: Training-Free Wireframe Anomaly Detection and Repair}{论文第一作者；CVM 期刊在投}{2025.12 - 2026.05}
+作者：\textbf{Jingyu Wu}, Youcheng Cai, Tengyu Luo, Ligang Liu
+
 预印本：\href{https://arxiv.org/abs/2608.04955}{arXiv:2608.04955}
 \begin{itemize}
 \item 提出训练无关的 WDR 框架，在中间线框阶段结合 GTAD 异常检测与 EGGTR 能量引导修复，识别、路由并局部再生成自交、边塌缩、顶点断连等几何与拓扑风险；兼容自回归与扩散式 B-Rep 生成器，无需重新训练主模型。
@@ -34,7 +45,10 @@ AI 研究员
 \end{itemize}
 \textbf{技术栈：}Python、PyTorch、Diffuser、PythonOCCT
 
-\entry{TrussOrbit: Edge-Orbit Sequence Modeling for Truss Metamaterial Inverse Design}{论文第一作者；ICLR 2027 在投}{2026.07 - 2026.09}
+\entry{TrussOrbit: Edge-Orbit Sequence Modeling for Truss Metamaterial Inverse Design}{共同第一作者；CVPR 2027 在投}{2026.07 - 2026.09}
+作者：\textbf{Jingyu Wu}, Qibiao Li, Tengyu Luo, Youcheng Cai, Ligang Liu
+
+\href{https://spaceboy202105.github.io/andyng2002.github.io/trussorbit/}{项目页}
 \begin{itemize}
 \item 提出边轨道序列表示 EOTR，利用对称性联合编码节点几何与连接拓扑，以紧凑序列和对称展开重建完整桁架，支持目标刚度驱动的自回归逆向设计。
 \item 提出集合级强化学习方法 SMCO，以有限元反馈和空槽反事实评估分配序列级边际信用，结合 GSPO 联合优化刚度匹配与物理有效性。

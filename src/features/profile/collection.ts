@@ -34,6 +34,7 @@ export const profile = defineCollection({
       location: localizedText,
       role: localizedText,
       period: localizedText,
+      researchProjects: z.array(localizedText).min(1).optional(),
     })).default([]),
     hobbies: z.array(localizedText.extend({ icon: z.enum(['camera', 'music', 'badminton', 'dumbbell', 'film']) })).default([]),
     contacts: z.array(z.object({ label: z.string().trim().min(1), href: z.url().refine(value => ['https:', 'http:', 'mailto:'].includes(new URL(value).protocol), 'Contact href must use https, http or mailto') })),

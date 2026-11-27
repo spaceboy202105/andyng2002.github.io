@@ -23,6 +23,7 @@ export const publications = defineCollection({
     equalContributionAuthors: z.array(z.string().trim().min(1)).min(2).optional(),
     codeUrl: externalUrl.optional(),
     cover: z.preprocess(localImagePath, image()),
+    homeCover: z.preprocess(localImagePath, image()).optional(),
     coverAlt: localizedText,
   }).superRefine((publication, ctx) => {
     const equal = publication.equalContributionAuthors;

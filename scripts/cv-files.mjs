@@ -11,7 +11,7 @@ export function cvSources(directory, prefix = '') {
     if (!entry.isDirectory() && !entry.isFile()) throw new Error(`CV sources must be regular files or directories: ${entry.name}`);
     const name = `${prefix}${entry.name}`;
     if (entry.isDirectory()) Object.assign(sources, cvSources(path.join(directory, entry.name), `${name}/`));
-    else if (entry.name.endsWith('.tex')) sources[name] = sha256(readFileSync(path.join(directory, entry.name)));
+    else if (entry.name.endsWith('.tex') || name === 'portrait.jpg') sources[name] = sha256(readFileSync(path.join(directory, entry.name)));
   }
   return sources;
 }

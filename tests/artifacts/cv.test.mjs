@@ -34,7 +34,9 @@ test('source changes and damaged PDFs fail CV artifact verification; a missing l
   const settings = { cvSourceDir: `${dir}/source`, cvManifestPath: `${dir}/source/manifest.json`, publicDir: `${dir}/public` };
   try {
     await cp('tests/fixtures/cv', settings.cvSourceDir, { recursive: true });
-    await cp('cv/style.tex', `${settings.cvSourceDir}/style.tex`);
+    await cp('cv/style.tex', path.join(settings.cvSourceDir, 'style.tex'));
+    const portrait = path.join(settings.cvSourceDir, 'portrait.jpg');
+    await writeFile(portrait, 'synthetic portrait bytes');
     const result = spawnSync(process.execPath, ['scripts/build-cv.mjs'], { env: { ...process.env, CV_SOURCE_DIR: settings.cvSourceDir, SITE_PUBLIC_DIR: settings.publicDir }, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stdout + result.stderr);
     assert.deepEqual(checkCv(settings), { zh: true, en: true });
@@ -49,6 +51,9 @@ test('source changes and damaged PDFs fail CV artifact verification; a missing l
       assert.equal(links.status, 0, links.stderr);
       assert.ok(links.stdout.split(/\s+/).includes('https://example.com/synthetic_fixture/very_long_segment_for_line_wrapping/another_long_segment_to_verify_readable_links/final_part?value=100'));
     }
+    await writeFile(portrait, 'changed portrait bytes');
+    assert.throws(() => checkCv(settings), /Stale CV source: portrait.jpg/);
+    await writeFile(portrait, 'synthetic portrait bytes');
     await rm(`${settings.publicDir}/cv/en.pdf`);
     assert.deepEqual(checkCv(settings), { zh: true });
     await writeFile(`${settings.publicDir}/cv/en.pdf`, '%PDF-damaged');
