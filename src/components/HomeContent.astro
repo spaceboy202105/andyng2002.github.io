@@ -20,7 +20,7 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
 <ProfileIntro locale={locale} profile={profile}/>
 {(featuredPublications.length > 0 || profile.data.thesis) && <section class="home-section" id="research" aria-labelledby="research-title">
   <header class="section-header"><h2 id="research-title">{locale === 'en' ? 'Research' : '学术成果'}</h2><a href={pageHref({locale,target:{kind:'publications'}})}>{locale === 'en' ? 'All research' : '全部学术成果'} ↗</a></header>
-  <PublicationList locale={locale} entries={featuredPublications}/>
+  <PublicationList locale={locale} entries={featuredPublications} home/>
   <ThesisEntry locale={locale} profile={profile}/>
 </section>}
 {featuredProjects.length > 0 && <section class="home-section" id="projects" aria-labelledby="projects-title">
@@ -49,6 +49,7 @@ const latest = selectStories({ entries: articles, locale }).slice(0, 3);
     {profile.data.internships.map(entry => <li>
       <div class="experience-heading"><h3>{entry.companyHref ? <a href={entry.companyHref[locale]}>{entry.company[locale]}</a> : entry.company[locale]} · {entry.location[locale]}</h3><p>{entry.period[locale]}</p></div>
       <p>{entry.role[locale]}</p>
+      {entry.researchProjects && <p>{locale === 'en' ? 'Research projects: ' : '研究项目：'}{entry.researchProjects.map(project => project[locale]).join(locale === 'en' ? ' · ' : '、')}</p>}
     </li>)}
   </ul>
 </section>}

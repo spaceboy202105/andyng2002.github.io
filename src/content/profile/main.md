@@ -5,8 +5,8 @@ name:
   en: Jingyu Wu
   zh: 吴靖宇
 bio:
-  en: "I am a master’s student at the University of Science and Technology of China. My research interests include computer graphics, 3D generation, autoregressive modeling, and agentic engineering."
-  zh: 我是中国科学技术大学硕士研究生。我的研究兴趣包括计算机图形学、三维生成、自回归模型和智能体工程。
+  en: "I am a master’s student at the University of Science and Technology of China, advised by Professor Ligang Liu. He works on geometric modeling and processing, geometric optimization for 3D printing, and machine learning for geometry processing. My research focuses on AI for computer-aided design and computational geometry, including 3D generation and autoregressive modeling. I am also interested in AI agents for engineering. During my undergraduate studies at Hefei University of Technology, I worked with Professor Meng Li on cybersecurity."
+  zh: 我是中国科学技术大学硕士研究生，师从刘利刚教授。刘老师主要研究几何建模与处理、面向 3D 打印的几何优化，以及机器学习在几何处理中的应用。我的研究聚焦面向计算机辅助设计（CAD）和计算几何的 AI，包括三维生成和自回归建模，也关注工程智能体。本科就读于合肥工业大学时，我曾在李萌教授指导下参与网络安全研究。
 portrait: ../../assets/portrait.jpg
 portraitAlt:
   en: Jingyu Wu outdoors
@@ -78,6 +78,13 @@ internships:
     period:
       en: Oct 2026 - Present
       zh: 2026.10 - 至今
+    researchProjects:
+      - en: Foundation model training for CAD
+        zh: CAD 领域基础模型训练
+      - en: Design intent-based modeling DSL (domain-specific language)
+        zh: 基于设计意图的建模指令专用语言（DSL）
+      - en: AI agent for CAD boss design
+        zh: Boss 柱智能体
 hobbies:
   - {icon: camera, en: Photography, zh: 摄影}
   - {icon: music, en: Music, zh: 音乐}

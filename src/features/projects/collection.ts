@@ -13,6 +13,7 @@ export const projects = defineCollection({
     role: localizedText,
     cover: z.preprocess(localImagePath, image()).optional(),
     coverAlt: localizedText.optional(),
+    linkFullSizeCover: z.boolean().optional(),
     date: calendarDate.optional(),
     codeUrl: externalUrl.optional(),
     demoUrl: externalUrl.optional(),
