@@ -110,6 +110,8 @@ internships:
         zh: 基于设计意图的建模指令专用语言（DSL）
       - en: AI agent for CAD boss design
         zh: Boss 柱智能体
+      - en: Representation learning for 3D CAD using parametric naming
+        zh: 基于参数化命名的三维CAD（3D CAD）表征学习
 hobbies:
   - {icon: camera, en: Photography, zh: 摄影}
   - {icon: music, en: Music, zh: 音乐}
